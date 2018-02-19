@@ -1,0 +1,51 @@
+input, select, textarea {
+	background-repeat: no-repeat;
+	background-position: right 8px center;
+	background-color: #fafbfc;
+	border: 1px solid #d1d5da;
+	outline: none;
+	line-height: 20px;
+	color: #24292e;
+	vertical-align: middle;
+	display: block;
+	width: 100%;
+	padding: 0 8px;
+	font-size: 16px;
+	border-radius: 3px;
+}
+
+input[type=checkbox],input[type=radio]{
+	display: inline-block;
+	width: initial;
+	vertical-align: top;
+	margin: 3px 3px 0px 5px;
+}
+
+input[disabled],
+select[disabled],
+textarea[disabled] {
+	cursor: not-allowed;
+	background-color: #eaeded;
+	color: #cad2d3;
+}
+
+input[readonly],
+select[readonly],
+textarea[readonly] {
+	background-color: #eee;
+	color: #777;
+	border-color: #ccc;
+}
+
+.form-group {
+	display: block;
+	margin: 0em 0px 1.2em 0;
+}
+
+.form-group > input,
+.form-group > select,
+.form-group > textarea,
+.form-group > label,
+.form-group > small {
+	display: block;
+}

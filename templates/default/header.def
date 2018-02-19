@@ -1,0 +1,11 @@
+<header class="mx-auto">
+	<div class="navbar" role="navigation">
+		<a class="navbar-brand" href="//{{=it.site.url}}">{{=it.site.name}}</a>	
+		<hr class="mobile-hr"/>
+		<div class="navbar-menu">
+			<ul class="list-reset">
+				<li><a href="/tags">Tags</a></li>
+			</ul>
+		</div>
+	</div>
+</header>

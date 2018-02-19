@@ -1,0 +1,18 @@
+<header class="mx-auto">
+	<div class="navbar" role="navigation">
+		<div class="navbar-brand-group">
+			<a class="navbar-brand" href="//{{=it.site.url}}">{{=it.site.name}}</a>
+			<span style="display: inline-block;margin-left: 5px;"><a href="//{{=it.site.url}}/admin">administration</a></span>	
+		</div>
+		<hr class="mobile-hr"/>
+		<div class="navbar-menu">
+			<ul class="list-reset">
+				<li><a href="/admin/tags">Tags</a></li>
+				<li><a href="/admin/post">Content Management</a></li>
+				<li><a href="/admin/user">Users</a></li>
+				<li><a href="/admin/settings">Settings</a></li>
+				<li><a href="/admin/databaseConf">Database Credentials</a></li>
+			</ul>
+		</div>
+	</div>
+</header>

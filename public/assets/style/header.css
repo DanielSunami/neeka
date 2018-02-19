@@ -1,0 +1,56 @@
+header {
+	width: 90%;
+	max-width: 1200px;
+	padding-top: 2em;
+	margin-bottom: 5em;
+}
+
+.mobile-hr {
+	border-top: 0px solid #DEDEDE;
+	border-bottom: 1px solid #DEDEDE;
+	width: 65%;
+	margin: 1em auto;
+	display: none;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-brand {
+	font-size: 44px;
+	text-align: center;
+}
+
+.navbar-menu { max-width: 300px;}
+
+.navbar-menu ul {
+	margin: 16px 0;
+	display: flex;
+	justify-content: space-between;
+}
+
+.navbar-menu ul li {
+	display: inline-block;
+	font-size: 16px;
+	margin-right: 45px;
+}
+
+@media(max-width: 500px) {
+	.mobile-hr {
+		display: block;
+	}
+
+	.navbar {
+		display: block;
+		text-align: center;
+	}
+
+	.navbar-menu { width: 100%; max-width: initial;}
+
+	.navbar-menu ul { justify-content: space-around; }
+	
+	.navbar-menu ul li { margin-right: 0; }
+
+}

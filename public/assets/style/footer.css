@@ -1,0 +1,34 @@
+html, body {
+	height: 100%;
+}
+
+footer {
+	background-color: #2D3138;
+	display: flex!important;
+    justify-content: center;
+    align-items: center;
+}
+
+footer div, footer div a {
+	color: #FFF;
+}
+
+.poweredby {
+	text-align: center;
+	font-weight: 300;
+	height: 20px;
+}
+
+.page-wrap {
+	min-height: 100%;
+	margin-bottom: -51px; 
+}
+
+.page-wrap:after {
+	content: "";
+	display: block;
+}
+
+footer, .page-wrap:after {
+	height: 51px; 
+}

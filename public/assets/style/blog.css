@@ -1,0 +1,50 @@
+.post-title {
+	margin: 0;
+	text-align: center;
+	font-size: 2em;
+}
+
+.post-date {
+	text-align: center;
+	font-weight: 300;
+	margin: 1em 0 2em 0;
+}
+
+.post {
+	margin-bottom: 10px;
+	font-size: 1.1em;
+}
+
+.post-separator {
+	border-top: 0px solid #DEDEDE;
+	border-bottom: 1px solid #DEDEDE;
+	width: 35%;
+	margin: 7em auto;
+}
+
+a.monstra-blog-tag {
+	float: left;
+	padding: 5px;
+	text-decoration: none;
+}
+
+.monstra-blog-pager {
+	margin-top: 3em;
+	text-align: center;
+}
+
+.monstra-blog-pager i.begin-icon {
+	position: relative;
+	left: 18px;
+}
+
+.monstra-blog-pager i.end-icon {
+	position: relative;
+	left: -18px;
+}
+
+.monstra-blog-pages-number {
+	display: inline;
+	vertical-align: super;
+	font-size: 19px;
+}

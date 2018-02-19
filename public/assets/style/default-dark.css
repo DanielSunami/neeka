@@ -1,0 +1,98 @@
+/* in use -> "Batman" Palette URL: http://paletton.com/#uid=13Q0u0kcM9+8ulB9VfTiN8Vo56P */
+/* dark blue Palette URL: http://paletton.com/#uid=14e0u0kFccSvg88DJ9VBOjtEyqu */
+
+* {
+	font-family: 'Roboto', sans-serif;
+	color: #f0eff2;
+	word-wrap: break-word;
+}
+/* loading btn dependency*/
+*, :after, :before  {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+::-moz-selection {
+  background: #81D4FA; 
+}
+
+::selection {
+  background: #81D4FA;
+}
+
+body {
+	background: radial-gradient(circle 90em, #0a002b, #000);
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+	transition: color .5s;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #3AB8E6;
+}
+
+a:active { color: #333; }
+
+a:visited { text-decoration: none; }
+
+small { font-weight: 300; }
+
+h1, h2, h3, h4 {
+	margin: 0;
+	padding: 0;
+}
+
+.error {
+	color: red;
+}
+
+.success {
+	color: #9bba1c;
+}
+
+.container {
+	margin: 0 auto 7em auto;
+	width: 80%;
+	max-width: 1200px;
+}
+
+.table { 
+	text-align: left;
+	width: 100%;
+}
+
+.table > .header {
+	background-color: #232736!important;
+}
+
+.table > .header:hover {
+	background-color:  #232736;
+}
+
+.table > .table-row > .cell {
+	padding: 20px 0 20px 30px;
+}
+
+.table > .table-row {
+	background-color: #0C1225;
+}
+
+.table > .table-row:hover {
+	background-color: #3E4356;
+}
+
+.table > .table-row:first-child {
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.table > .table-row:last-child {
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{{=it.title}} | {{=it.site.name}}</title>
+	<meta http-equiv="x-dns-prefetch-control" content="on">
+	<link rel="dns-prefetch" href="//{{=it.site.url}}" />
+	<link rel="dns-prefetch" href="//www.google-analytics.com" />
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="{{=it.description}}">
+	<meta name="keywords" content="{{=it.keywords}}">
+	<meta name="robots" content="index,follow">
+
+	<!-- Open Graph Protocol -->
+	<meta property="og:site_name" content="{{=it.site.name}}">
+	<meta property="og:url" content="//{{=it.url}}">
+	<meta property="og:title" content="{{=it.site.name}}">
+
+	<!-- Google+ Snippets -->
+	<meta itemprop="url" content="//{{=it.url}}">
+	<meta itemprop="name" content="{{=it.site.name}}">
+
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<link rel="stylesheet" href="/assets/style/font.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/style/default.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/style/card.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/style/form.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/style/buttons.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/style/loading.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/style/loading-btn.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/style/footer.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/style/header.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/style/blog.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/style/prism.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/style/normalize.min.css" type="text/css">
+	<link rel="stylesheet" href="/assets/style/basscss.min.css" type="text/css" />
+	<!-- Google Analytics -->
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	ga('create', '{{=it.site.gaUID}}', 'auto');
+	ga('send', 'pageview');
+	ga('set', {
+		page: '{{=it.site.path}}',
+		title: '{{=it.title}}'
+	});
+	</script>
+	<!-- End Google Analytics -->
+</head>
+<body>
+<div class="page-wrap">
+	{{#def.header}}
+	<div class="container">
+		<div class="max-width-3 mx-auto">
+			{{#def.posts_list}}
+		</div>
+	</div>
+	
+</div>
+	{{#def.footer}}
+	<script type="text/javascript" src="/assets/lib/prism.js"></script>
+</body>
+</html>

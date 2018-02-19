@@ -1,0 +1,54 @@
+.slider {
+	position: relative;
+	width: 100%;
+}
+
+.frame {
+	position: relative;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.slides {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+/* aligns li*/
+.slides:before {
+	content: "";
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+}
+
+.slides li {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+	padding-bottom: 10px;
+	vertical-align: top;
+	overflow: hidden;
+	white-space: normal;
+}
+
+.prev, .next {
+	position: absolute;
+	top: 50%;
+	margin-top: -25px;
+	display: block;
+	cursor: pointer;
+}
+
+.next {
+	right: 0;
+}
+
+.prev {
+	left: 0;
+}
+
+.next svg:hover, .prev svg:hover {
+	transform: scale(1.1);
+}

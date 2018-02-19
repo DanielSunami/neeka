@@ -1,0 +1,66 @@
+* {
+	font-family: 'Roboto', sans-serif;
+	color: #444; light-theme
+	word-wrap: break-word;
+}
+
+/* loading btn dependency*/
+*, :after, :before  {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+::-moz-selection {
+  background: #81D4FA; 
+}
+
+::selection {
+  background: #81D4FA;
+}
+
+body {
+	background-color: #FFF;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+	transition: color .5s;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #3AB8E6;
+}
+
+a:active { color: #333; }
+
+a:visited { text-decoration: none; }
+
+small { font-weight: 300; }
+
+h1, h2, h3, h4 {
+	margin: 0;
+	padding: 0;
+}
+
+h2.subtitle {
+	font-weight: 100;
+    padding-bottom: 1em;
+}
+
+.error {
+	color: red;
+}
+
+.success {
+	color: #9bba1c;
+}
+
+.container {
+	margin: 0 auto 7em auto;
+	width: 80%;
+	max-width: 1200px;
+}

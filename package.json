@@ -1,0 +1,43 @@
+{
+  "name": "neeka",
+  "version": "0.0.1",
+  "description": "Super Simple blogging plataform",
+  "keywords": [
+    "express",
+    "content",
+    "management",
+    "cms",
+    "simple",
+    "blog",
+    "plataform",
+    "blogging"
+  ],
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "connect-redis": "^3.2.0",
+    "cookie": "^0.3.1",
+    "cookie-parser": "^1.4.3",
+    "dir-routes": "^1.0.6",
+    "dot": "^1.1.2",
+    "express": "^4.14.0",
+    "fecha": "^2.3.1",
+    "mongoose": "^4.7.8",
+    "multer": "^1.0.5",
+    "nodemailer": "^4.4.1",
+    "passgenn": "^0.1.1"
+  },
+  "author": "Daniel Sunami <danielsunami@akafrx.com> (http://akafrx.com)",
+  "homepage": "https://github.com/DanielSunami/neeka",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/DanielSunami/neeka.git"
+  },
+  "main": "./index.js",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DanielSunami/neeka"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
