@@ -132,6 +132,10 @@ meta.statics = {
 		});
 	},
 	
+	/*
+	 * @year - full year format YYYY
+	 * @month - zero based, 0 = jan & 11 = dez
+	 */
 	addToYearMonth: function(year, month) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
 			var found = false;
