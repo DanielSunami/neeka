@@ -8,6 +8,7 @@ global.zeroLeftMask = function (number, size) {
 Date.prototype.toString = function (){return (this.getMonth()+1)+"-"+this.getDate()+"-"+this.getFullYear()}
 Date.prototype.toJSON = function (){return (this.getMonth()+1)+"-"+this.getDate()+"-"+this.getFullYear()}
 
+
 var express = require('express'),
 	http = require('http'),
 	app = express(),
@@ -23,7 +24,6 @@ var express = require('express'),
 	util = require('util'),
 	router = require('dir-routes'),
 	mongoUri = "",
-	render = require(rootDir+'/render'),
 	fecha = require('fecha');
 
 var i18n = {
@@ -55,12 +55,6 @@ fecha.masks.brazilian = 'dddd, D [de] MMMM [de] YYYY';
 fecha.masks.url = 'YYYY/MM/DD';
 fecha.masks.regular = 'DD/MM/YYYY';
 fecha.masks.iso = 'YYYY-MM-DD';
-
-require("dot").process({
-	global: "_page.render"
-	, destination: rootDir + "/render"
-	, path: (rootDir + "/templates/default")
-});
 
 global.utils = {
 	criptoSenha: function (senha){
@@ -147,6 +141,13 @@ if (fs.existsSync(rootDir+'/routes/install')) {
 	global.NEEKA = JSON.parse(fs.readFileSync(rootDir+'/neekaconf.json', 'utf8'));
 	global.mailer = require(rootDir+'/lib/mailer.js');
 }
+
+require("dot").process({
+	global: "_page.render"
+	, destination: rootDir + "/render"
+	, path: (rootDir + "/templates/default")
+});
+var render = require(rootDir+"/render");
 
 app.disable('x-powered-by');
 app.use(cookieParser());

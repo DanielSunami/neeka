@@ -12,7 +12,7 @@ module.exports = function(req, res, next){
 
 		fs.writeFileSync(rootDir+'/neekaconf.json', JSON.stringify(obj)); 
 
-		/*var deleteFolderRecursive = function (path) {
+		var deleteFolderRecursive = function (path) {
 			if( fs.existsSync(path) ) {
 				fs.readdirSync(path).forEach(function(file,index){
 					var curPath = path + "/" + file;
@@ -27,7 +27,7 @@ module.exports = function(req, res, next){
 		};
 
 		deleteFolderRecursive(rootDir+'/routes/install');
-*/
+
 		utils.installed = true;
 		res.redirect('/');
 	}

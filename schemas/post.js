@@ -230,23 +230,23 @@ meta.query = {
 	 *
 	 **/
 	publishedByYearMonth: function(){
-		return this.findById('5a5ab903486beb7fce003a39', 'byYearMonth');
+		return this.findOne({_id: '5a5ab903486beb7fce003a39'}, 'byYearMonth');
 	},
 
 	publishedByYear: function(){
-		return this.findById('5a5ab903486beb7fce003a39', 'byYear');
+		return this.findOne({_id: '5a5ab903486beb7fce003a39'}, 'byYear');
 	},
 
 	byAuthor: function(){
-		return this.findById('5a5ab903486beb7fce003a39', 'byAuthor');
+		return this.findOne({_id: '5a5ab903486beb7fce003a39'}, 'byAuthor');
 	},
 
 	published: function(){
-		return this.findById('5a5ab903486beb7fce003a39', 'published');
+		return this.findOne({_id: '5a5ab903486beb7fce003a39'}, 'published');
 	},
 
 	drafts: function(){
-		return this.findById('5a5ab903486beb7fce003a39', 'draft');
+		return this.findOne({_id: '5a5ab903486beb7fce003a39'}, 'draft');
 	}
 
 /* TO DO
