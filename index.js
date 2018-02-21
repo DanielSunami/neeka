@@ -166,7 +166,7 @@ app.use(function (req, res, next){
 
 /* block unauthorized access */
 app.use(/\/admin(\/.*)?/, function (req, res, next){
-	if(!req.session) res.status(403).json({ok: false, msg: 'no session'});
+	if(!req.session) res.redirect('/login');
 	else next();
 });
 

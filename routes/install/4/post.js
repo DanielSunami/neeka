@@ -28,6 +28,9 @@ module.exports = function(req, res, next){
 
 		deleteFolderRecursive(rootDir+'/routes/install');
 
+		global.NEEKA = JSON.parse(fs.readFileSync(rootDir+'/neekaconf.json', 'utf8'));
+		global.mailer = require(rootDir+'/lib/mailer.js');
+
 		utils.installed = true;
 		res.redirect('/');
 	}

@@ -1,6 +1,7 @@
 var render = require(rootDir+'/render'),
 	mongoose = require('mongoose'),
-	fs = require('fs');
+	fs = require('fs'),
+	sessionManager = require(rootDir+'/lib/sessionManager.js');
 
 
 module.exports = function(req, res){
