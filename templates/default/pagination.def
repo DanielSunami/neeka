@@ -1,0 +1,9 @@
+<nav data-pagination>
+	<a href="?page=1" {{? it.page < 1}}disabled{{?}} class="first"><i class="material-icons">&#xE5CB;</i><i class="material-icons">&#xE5CB;</i></a>
+	<a href="?page={{=it.page}}" {{? it.page < 1}}disabled{{?}}><i class="material-icons">&#xE5CB;</i></a>
+	<ul>
+		<li class=current><a href="#">{{=it.page+1}}</a>
+	</ul>
+	<a href="?page={{=it.page+2}}" {{? it.page+1 == it.totalNumberOfPages}}disabled{{?}}><i class="material-icons">&#xE5CC;</i></a>
+	<a href="?page={{=it.totalNumberOfPages}}" {{? it.page+1 == it.totalNumberOfPages}}disabled{{?}} class="last"><i class="material-icons">&#xE5CC;</i><i class="material-icons">&#xE5CC;</i></a>
+</nav>

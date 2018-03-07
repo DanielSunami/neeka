@@ -23,7 +23,7 @@ module.exports = function(req, res){
 		.populate('author')
 		.exec(function(err,docs){
 			pageData.posts = docs;
-
+			
 			res.send(render.admin_index(pageData));
 
 		});

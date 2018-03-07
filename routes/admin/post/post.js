@@ -5,13 +5,14 @@ var render = require(rootDir+'/render'),
 
 module.exports = function(req, res){
 
-	req.body.author = req.session.userId;
+	req.body.author = req.session.user.id;
 
-	new model.post(req.body).save(function(err){
+	new model.post(req.body).save(function(err, doc){
 		if(err) {
 			console.log(err);
+			res.json({ok: false});
 		} else {
-			res.redirect('/admin');
+			res.json({ok: true, id: doc._id});
 		}
 	})
 

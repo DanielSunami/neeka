@@ -15,6 +15,10 @@
 	font-size: 1.1em;
 }
 
+.post p {
+	margin-bottom: 1.5em;
+}
+
 .post-separator {
 	border-top: 0px solid #DEDEDE;
 	border-bottom: 1px solid #DEDEDE;
@@ -26,25 +30,4 @@ a.monstra-blog-tag {
 	float: left;
 	padding: 5px;
 	text-decoration: none;
-}
-
-.monstra-blog-pager {
-	margin-top: 3em;
-	text-align: center;
-}
-
-.monstra-blog-pager i.begin-icon {
-	position: relative;
-	left: 18px;
-}
-
-.monstra-blog-pager i.end-icon {
-	position: relative;
-	left: -18px;
-}
-
-.monstra-blog-pages-number {
-	display: inline;
-	vertical-align: super;
-	font-size: 19px;
 }

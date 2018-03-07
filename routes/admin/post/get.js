@@ -12,12 +12,14 @@ module.exports = function(req, res){
 			keywords: NEEKA.keywords
 		},
 		post: {
+			_id: "",
 			title: "",
 			slug: "",
 			preview: "",
 			body: "",
 			published: true,
 			keywords: "",
+			description: ""
 		}
 	};
 

@@ -26,8 +26,8 @@ module.exports = function(req, res){
 			pageData.posts = docs;
 			
 			model.meta_posts.find().published().exec(function(err, meta){
-				pageData.totalNumberOfPages = meta.published/req.query.itens;
-
+				pageData.totalNumberOfPages = Math.ceil(meta.published/req.query.itens);
+				
 				res.send(render.blog_index(pageData));
 			})
 		});

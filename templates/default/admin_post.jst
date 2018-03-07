@@ -1,42 +1,15 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>{{=it.site.name}} | Administration</title>
-	<meta http-equiv="x-dns-prefetch-control" content="on">
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="robots" content="noindex,nofollow">
-
-	<link rel="icon" href="/favicon.ico" type="image/x-icon">
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-	
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="/assets/style/normalize.min.css" type="text/css">
-	<link rel="stylesheet" href="/assets/style/basscss.min.css" type="text/css" />
-	<link rel="stylesheet" href="/assets/style/taggle.css" type="text/css" />
-	<link rel="stylesheet" href="/assets/style/prism.css" type="text/css" />
-	<link rel="stylesheet" href="/assets/style/loading.css" type="text/css" />
-	<link rel="stylesheet" href="/assets/style/loading-btn.css" type="text/css" />
-	
-	<link rel="stylesheet" href="/assets/style/font.css" type="text/css" />
-	<link rel="stylesheet" href="/assets/style/default-dark.css" type="text/css" />
-	<link rel="stylesheet" href="/assets/style/card.css" type="text/css" />
-	<link rel="stylesheet" href="/assets/style/form.css" type="text/css" />
-	<link rel="stylesheet" href="/assets/style/buttons.css" type="text/css" />
-	<link rel="stylesheet" href="/assets/style/footer.css" type="text/css" />
-	<link rel="stylesheet" href="/assets/style/header.css" type="text/css" />
-	<link rel="stylesheet" href="/assets/style/blog.css" type="text/css" />
-	<link rel="stylesheet" href="/assets/style/admin.css" type="text/css" />
+<head>	
+	{{#def.admin_head}}
 </head>
 <body>
 <div class="page-wrap">
 	{{#def.admin_header}}
 	<div class="container">
 		<div class="max-width-3 mx-auto">
-			<form method="POST" name="post" action="/admin/post/"> 
+			<form method="POST" name="post" action="/admin/post/{{=it.post._id}}"> 
 				<input type="hidden" name="id" value="{{=it.post._id}}"/>
-				<input type="hidden" name="saveonly"/>
 
 				<div class="tab-frame">
 					<input type="radio" class="tab-input" checked name="tab" id="tab1">
@@ -91,11 +64,11 @@
 						<small style="word-wrap: normal;">separated by comma (,)</small>
 					</div>
 					<div class="clearfix">
-						<button class="green col-right col-3 ml1 ld ld-ext-right">
+						<button type="button" id="btn-save-quit" class="green col-right col-3 ml1 ld ld-ext-right">
 							Save & Quit
 							<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
 						</button>
-						<button id="btn-save" class="green col-right col-3 mx1 ld ld-ext-right">
+						<button type="button" id="btn-save" class="green col-right col-3 mx1 ld ld-ext-right">
 							Save
 							<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
 						</button>
@@ -110,30 +83,78 @@
 	{{#def.footer}}
 	<script type="text/javascript" src="/assets/lib/prism.js"></script>
 	<script type="text/javascript" src="/assets/lib/taggle.min.js"></script>
-	<script src="/assets/lib/serialize.min.js"></script>
+	<script type="text/javascript" src="/assets/lib/alertify.min.js"></script>
+	<script type="text/javascript" src="/assets/lib/serialize.min.js"></script>
 	<script type="text/javascript">
 		new Taggle("tags",{hiddenInputName: "tag",placeholder:""});
 
 		document.post.title.onkeyup = function(e){
 			document.post.slug.value = 
 				/* normalize title to slug*/
-				this.value.normalize('NFD').replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/ /g,"-");
+				this.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/ /g,"-");
 		};
 
-		[].map.call(document.querySelectorAll('form input'), function(input){
+		[].map.call(document.querySelectorAll("form input"), function(input){
 			input.onkeypress = function(e) {if ( e.which == 13 ) e.preventDefault();}
 		});
 
-		document.querySelector('#btn-save').onclick = function(e) {
+		document.querySelector("#btn-save").onclick = function(e) {
 			var _self = this,
-				arr = document.querySelector('#article').value.split(/--preview--/);
+				arr = document.querySelector("#article").value.split(/--preview--/);
 
 			_self.classList.add("running");
 
-			document.post.body.value = arr[0];
-			document.post.preview.value = arr[1];
-			document.post.saveonly.value = "true";
-		}
+			if(arr.length > 1){
+				document.post.preview.value = arr[0];
+				document.post.body.value = arr[1];
+			} else document.post.body.value = document.querySelector("#article").value;
+
+			var req = new XMLHttpRequest();
+			req.onload = function(){
+				var res = JSON.parse(this.responseText);
+				_self.classList.remove("running");
+				_self.removeAttribute("disabled");
+				if(res.ok){
+					if(!document.querySelector("input[name=id]").value) {
+						document.querySelector("input[name=id]").value = res.id;
+						document.post.action="/admin/post/"+res.id;
+					}
+					alertify.success("Saved!");
+				} 
+				else alertify.error("Something went wrong =(");
+			};
+			req.open(_self.form.method, _self.form.action, true);
+			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			
+			req.send(_self.form.serialize());
+
+		};
+
+		document.querySelector("#btn-save-quit").onclick = function(e) {
+			var _self = this,
+				arr = document.querySelector("#article").value.split(/--preview--/);
+
+			_self.classList.add("running");
+
+			if(arr.length > 1){
+				document.post.preview.value = arr[0];
+				document.post.body.value = arr[1];
+			} else document.post.body.value = document.querySelector("#article").value;
+
+			var req = new XMLHttpRequest();
+			req.onload = function(){
+				var res = JSON.parse(this.responseText);
+				_self.classList.remove("running");
+				_self.removeAttribute("disabled");
+				if(res.ok) window.location.pathname = "/admin";
+				else alertify.error('Something went wrong =(');
+			};
+			req.open(_self.form.method, _self.form.action, true);
+			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			
+			req.send(_self.form.serialize());
+
+		};
 
 	</script>
 </body>
