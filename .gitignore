@@ -1,6 +1,6 @@
 /node_modules
 /routes/_install
-/render/*
+/render
 !/render/index.js 
 neekaconf.json
 dbconf.json
