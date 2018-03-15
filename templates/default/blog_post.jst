@@ -64,7 +64,7 @@
 	<div class="container">
 		<div class="max-width-3 mx-auto">
 			<div class="post-container">
-				<h3 class="post-title"><a href="/{{=fecha.format(it.post.created_on, 'url')}}/{{=it.post.slug}}">{{=it.post.title}}</a></h3>
+				<h1 class="post-title"><a href="/{{=fecha.format(it.post.created_on, 'url')}}/{{=it.post.slug}}">{{=it.post.title}}</a></h3>
 				<div class="post-date"><small>{{=fecha.format(it.post.created_on, 'brazilian')}} | <a href="{{=it.post.author.website}}">{{=it.post.author.fullName}}</a></small></div>
 				<div class="post">
 					{{=it.post.preview}}

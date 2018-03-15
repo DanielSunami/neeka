@@ -1,6 +1,7 @@
 'use strict';
 
 global.rootDir = __dirname;
+global.mongoUri = "";
 global.zeroLeftMask = function (number, size) {
 	number = number.toString();
 	for(; size - number.length > 0;) number = "0" + number;
@@ -13,6 +14,7 @@ Date.prototype.toString = function (){return (this.getMonth()+1)+"-"+this.getDat
 Date.prototype.toJSON = function (){return (this.getMonth()+1)+"-"+this.getDate()+"-"+this.getFullYear()}
 
 require('./lib/setupFecha.js');
+require('./lib/setupMongoose.js');
 require('./lib/checkUpdate.js');
 var http = require('http'),
 	app = require('./lib/app.js');
