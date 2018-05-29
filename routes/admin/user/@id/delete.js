@@ -15,21 +15,7 @@ module.exports = function(req, res){
 		}
 	};
 
-	if(req.session.user.id != req.params.id) {
-		if(!permissions.allow(req.session.permissions))
-			res.status(401).end('unauthorized');
-		else {
-			model.user
-			.findById(req.params.id)
-			.exec(function(err,doc){
-				if(err) res.json({ok: false}); 
-				else{
-					doc.remove();
-					res.json({ok: true});
-				}
-			});
-		}
-	} else {
+	if(req.session.user.id == req.params.id || (req.session.user.id != req.params.id && permissions.allow(req.session.permissions)) ) {
 		model.user
 			.findById(req.params.id)
 			.exec(function(err,doc){
@@ -39,5 +25,7 @@ module.exports = function(req, res){
 					res.json({ok: true});
 				}
 			});
+	} else {	
+		res.status(401).end('unauthorized');
 	}
 };

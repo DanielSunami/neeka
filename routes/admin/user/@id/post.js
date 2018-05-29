@@ -7,35 +7,7 @@ module.exports = function(req, res){
 
 	req.body.password = utils.criptoSenha(req.body.password);
 	
-	if(req.session.user.id != req.params.id) {
-		if(!permissions.allow(req.session.permissions))
-			res.status(401).end('unauthorized');
-		else {
-			model.user.findById(req.params.id,function(err, doc){
-				if(!doc){
-					res.json({ok: false})
-				} else {
-					for(a in req.body) {
-						if( req.body.hasOwnProperty(a) && (
-								a === 'firstname' ||
-								a === 'lastname' ||
-								a === 'website' ||
-								a === 'password' ||
-								a === 'birthday' 
-							)
-						) {
-							doc[a] = req.body[a];
-						}
-					}
-					
-					doc.save(function(err, doc){
-						if(err) res.json({ok: false});
-						else res.json({ok: true});
-					});
-				}
-			});			
-		}
-	} else {
+	if(req.session.user.id == req.params.id || (req.session.user.id != req.params.id && permissions.allow(req.session.permissions)) ) {
 		model.user.findById(req.params.id,function(err, doc){
 			if(!doc){
 				res.json({ok: false})
@@ -59,5 +31,7 @@ module.exports = function(req, res){
 				});
 			}
 		});
+	} else {
+		res.status(401).end('unauthorized');
 	}
 };

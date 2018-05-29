@@ -14,7 +14,8 @@ module.exports = function(req, res){
 				res.setHeader("Set-Cookie",sessionManager.createSession({
 					user: {
 						id: user._id,
-						name: user.fullName
+						name: user.fullName,
+						permissions: user.permissions
 					}
 				}));
 				res.json({ok:true});
