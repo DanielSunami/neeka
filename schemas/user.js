@@ -4,9 +4,10 @@ var user = new Schema({
 	firstname: { type: String, required: true },
 	lastname: String,
 	website: String,
-	email: { type: String, lowercase: true, trim: true, required: true },
+	email: { type: String, lowercase: true, trim: true, required: true, unique: true },
 	password: { type: String, required: true },
 	birthday: Date,
+	permissions: [Number],
 	created_on: { type: Date, default: Date.now },
 	last_update: { type: Date, default: Date.now }
 });

@@ -19,6 +19,5 @@ module.exports = function(req, res){
 			pageData.user = doc;
 
 			res.send(render.admin_user(pageData));
-
 		});
 };

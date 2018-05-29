@@ -16,6 +16,7 @@ Date.prototype.toJSON = function (){return (this.getMonth()+1)+"-"+this.getDate(
 require('./lib/setupFecha.js');
 require('./lib/setupMongoose.js');
 require('./lib/checkUpdate.js');
+require('./lib/permissions.js');
 var http = require('http'),
 	app = require('./lib/app.js');
 
