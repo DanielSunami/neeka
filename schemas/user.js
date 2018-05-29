@@ -7,7 +7,7 @@ var user = new Schema({
 	email: { type: String, lowercase: true, trim: true, required: true, unique: true },
 	password: { type: String, required: true },
 	birthday: Date,
-	permissions: [Number],
+	permissions:  { type: Array, default: [] },
 	created_on: { type: Date, default: Date.now },
 	last_update: { type: Date, default: Date.now }
 });
