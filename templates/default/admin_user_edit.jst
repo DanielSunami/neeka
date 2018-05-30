@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{{#def.admin_head}}
+</head>
+<body>
+<div class="page-wrap">
+	{{#def.admin_header}}
+	<div class="container">
+		<div class="max-width-4 mx-auto">
+
+			<form method="POST" name="user" action="/admin/user/{{=it.user._id}}"> 
+				<input type="hidden" name="id"/>
+								
+				<div class="clearfix mxn1">
+					<div class="sm-col sm-col-12 px1 my2">
+						<div class="table">
+							<!-- table header -->
+							<div class="clearfix table-row header">
+								<div class="sm-col sm-col-12 cell center" style="padding-left: 0">{{=it.user.fullName}}</div>
+							</div>
+
+							<div class="clearfix">
+								<div class="sm-col sm-col-6 px1">
+									<div class="form-group">
+										<label>Firstname
+										<input type="text" name="firstname" value="{{=it.user.firstname}}"/></label>
+									</div>
+								</div>
+								<div class="sm-col sm-col-6 px1">
+									<div class="form-group">
+										<label>Lastname
+										<input type="text" name="lastname" value="{{=it.user.lastname}}"/></label>
+									</div>
+								</div>
+							</div>
+							<div class="clearfix">
+								<div class="sm-col sm-col-6 px1">
+									<div class="form-group">
+										<label>Website
+										<input type="text" name="website" value="{{=it.user.website}}"/></label>
+									</div>
+								</div>
+								<div class="sm-col sm-col-6 px1">
+									<div class="form-group">
+										<label>Birthday
+										<input type="text" name="birthday" value="{{=it.user.birthday}}"/></label>
+										<small>day-month-year - 21/01/1990 </small>
+									</div>
+								</div>
+							</div>
+							<div class="clearfix">
+								<div class="sm-col sm-col-6 px1">
+									<div class="form-group">
+										<label>Email
+										<input type="text" name="email" value="{{=it.user.email}}" readonly/></label>
+									</div>
+								</div>
+								<div class="sm-col sm-col-6 px1">
+									<div class="form-group">
+										<label>Password
+										<input type="password" name="password"/></label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div>
+					<div class="clearfix">
+						<button id="btn-save" type="button" class="green col-right col-3 mx1 ld ld-ext-right">
+							Save
+							<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
+						</button>
+						<button id="btn-delete" type="button" class="salmon col-right col-3 mx1 ld ld-ext-right">
+							Delete
+							<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+</div>
+	{{#def.footer}}
+	<script type="text/javascript" src="/assets/lib/prism.js"></script>
+	<script src="/assets/lib/serialize.min.js"></script>
+	<script type="text/javascript" src="/assets/lib/alertify.min.js"></script>
+	<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function () {
+
+		
+		document.forms.user.querySelector('#btn-save').onclick = function(){
+			var _self = this;
+	
+			_self.classList.add("running");
+			_self.setAttribute("disabled","");
+			var req = new XMLHttpRequest();
+			req.onload = function(){
+				var res = JSON.parse(this.responseText);
+				_self.classList.remove("running");
+				_self.removeAttribute("disabled");
+				if(res.ok) {
+					alertify.success('Saved!');
+					setTimeout(function(){document.location.pathname = "/admin/";},600);
+				}
+			};
+			req.open(_self.form.method, _self.form.action, true);
+			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			
+			if(document.querySelector("[name=password]").value == "") document.querySelector("[name=password]").disabled = "disabled";
+			req.send(_self.form.serialize());
+		};
+		
+
+		document.forms.user.querySelector('#btn-delete').onclick = function(){
+			var _self = this;
+	
+			_self.classList.add("running");
+			_self.setAttribute("disabled","");
+			var req = new XMLHttpRequest();
+			req.onload = function(){
+				var res = JSON.parse(this.responseText);
+				_self.classList.remove("running");
+				_self.removeAttribute("disabled");
+				if(res.ok) {
+					alertify.success('Deleted!');
+					setTimeout(function(){document.location.pathname = "/admin/";},600);
+				}
+			};
+			req.open("DELETE", _self.form.action, true);
+			
+			req.send();
+		};
+
+		[].map.call(document.querySelectorAll('input'), function(input) {
+			input.addEventListener("keyup", function(event) {
+				event.preventDefault();
+				if (event.keyCode === 13) {
+					document.login.querySelector('button').click();
+				}
+			});
+		});
+	});
+
+	</script>
+</body>
+</html>

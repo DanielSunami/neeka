@@ -15,7 +15,7 @@ module.exports = function(req, res){
 		}
 	};
 
-	if(req.session.user.id == req.params.id || (req.session.user.id != req.params.id && permissions.allow(req.session.permissions)) ) {
+	if(req.session.user.id == req.params.id || (req.session.user.id != req.params.id && permissions.allow(req.session.user.permissions)) ) {
 		model.user
 			.findById(req.params.id)
 			.exec(function(err,doc){

@@ -17,7 +17,7 @@ module.exports = function(req, res){
 		}
 	};
 
-	if(req.session.user.id == req.params.id || (req.session.user.id != req.params.id && permissions.allow(req.session.permissions)) ) {
+	if(req.session.user.id == req.params.id || (req.session.user.id != req.params.id && permissions.allow(req.session.user.permissions)) ) {
 		model.post.findById(req.params.id,function(err, doc){
 			if(!doc){
 				res.redirect('/admin/post');

@@ -6,8 +6,8 @@ var permissions = new PermissionGroup([PERMISSION.ALTER_USERS]);
 module.exports = function(req, res){
 
 	req.body.password = utils.criptoSenha(req.body.password);
-	
-	if(req.session.user.id == req.params.id || (req.session.user.id != req.params.id && permissions.allow(req.session.permissions)) ) {
+
+	if(req.session.user.id == req.params.id || (req.session.user.id != req.params.id && permissions.allow(req.session.user.permissions)) ) {
 		model.user.findById(req.params.id,function(err, doc){
 			if(!doc){
 				res.json({ok: false})

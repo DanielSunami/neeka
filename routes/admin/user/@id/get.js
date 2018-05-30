@@ -18,6 +18,6 @@ module.exports = function(req, res){
 		.exec(function(err,doc){
 			pageData.user = doc;
 
-			res.send(render.admin_user(pageData));
+			res.send(render.admin_user_edit(pageData));
 		});
 };

@@ -9,35 +9,37 @@
 	<div class="container">
 		<div class="max-width-4 mx-auto">
 
-		<div class="clearfix mxn1">
-			<div class="sm-col sm-col-12 px1 my2">
-				<div class="table">
-					<!-- table header -->
-					<div class="clearfix table-row header">
-						<div class="sm-col cell" style="width: 9%">Firstname</div>
-						<div class="sm-col cell" style="width: 9%">Lastname</div>
-						<div class="sm-col cell" style="width: 26%">Website</div>
-						<div class="sm-col cell" style="width: 21%">Email</div>
-						<div class="sm-col cell" style="width: 11.5%">Birthday</div>
-						<div class="sm-col cell" style="width: 11.5%">Created On</div>
-						<div class="sm-col cell" style="width: 11.5%">Last Update</div>
+			<div class="clearfix mxn1">
+				<div class="sm-col sm-col-12 px1 my2">
+					<div class="table">
+						<!-- table header -->
+						<div class="clearfix table-row header">
+							<div class="sm-col cell" style="width: 15%">Firstname</div>
+							<div class="sm-col cell" style="width: 15%">Lastname</div>
+							<div class="sm-col cell" style="width: 30%">Email</div>
+							<div class="sm-col cell" style="width: 15%">Created On</div>
+							<div class="sm-col cell" style="width: 15%">Last Update</div>
+							<div class="sm-col cell" style="width: 10%">Edit</div>
+						</div>
+						<!-- rows -->
+						{{var fecha =  require('fecha');}}
+						{{~it.users :user:index}}
+						<div class="clearfix table-row">
+							<div class="sm-col cell" style="width: 15%">{{=user.firstname}}</div>
+							<div class="sm-col cell" style="width: 15%">{{=user.lastname}}</div>
+							<div class="sm-col cell" style="width: 30%">{{=user.email}}</div>
+							<div class="sm-col cell" style="width: 15%">{{=fecha.format(user.created_on, 'regular')}}</div>
+							<div class="sm-col cell" style="width: 15%">{{=fecha.format(user.last_update, 'regular')}}</div>
+							<div class="sm-col cell" style="width: 10%">
+								<a href="/admin/user/{{=user._id}}">
+									<i class="material-icons">edit</i>
+								</a>
+							</div>
+						</div>
+						{{~}}
 					</div>
-					<!-- rows -->
-					{{var fecha =  require('fecha');}}
-					{{~it.users :user:index}}
-					<div class="clearfix table-row">
-						<div class="sm-col cell" style="width: 9%">{{=user.firstname}}</div>
-						<div class="sm-col cell" style="width: 9%">{{=user.lastname}}</div>
-						<div class="sm-col cell" style="width: 26%">{{=user.website}}</div>
-						<div class="sm-col cell" style="width: 21%">{{=user.email}}</div>
-						<div class="sm-col cell" style="width: 11.5%">{{?user.birthday}} {{=fecha.format(user.birthday, 'regular')}} {{??}} N/A {{?}}</div>
-						<div class="sm-col cell" style="width: 11.5%">{{=fecha.format(user.created_on, 'regular')}}</div>
-						<div class="sm-col cell" style="width: 11.5%">{{=fecha.format(user.last_update, 'regular')}}</div>
-					</div>
-					{{~}}
 				</div>
 			</div>
-		</div>
 
 			<form method="POST" name="user" action="/admin/user/"> 
 				<input type="hidden" name="id"/>

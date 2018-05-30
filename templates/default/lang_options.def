@@ -1,3 +1,4 @@
+<datalist id="lang-list">
 <option value="abap">ABAP</option>
 <option value="actionscript">ActionScript</option>
 <option value="ada">Ada</option>
@@ -138,3 +139,4 @@
 <option value="xeora">Xeora</option>
 <option value="xojo">Xojo (REALbasic)</option>
 <option value="yaml">YAML</option>
+</datalist>
