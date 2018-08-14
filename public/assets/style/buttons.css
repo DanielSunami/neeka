@@ -1,4 +1,4 @@
-button, a.btn {
+button.neeka-button, a.btn {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -36,67 +36,67 @@ button, a.btn {
   box-shadow: 2px 5px 10px rgba(22, 22, 22, 0.1);
 }
 
-button:hover, a.btn:hover {
+button.neeka-button:hover, a.btn:hover {
   -webkit-transition: all 60ms ease;
   transition: all 60ms ease;
   opacity: .85;
 }
-button:active, a.btn:active {
+button.neeka-button:active, a.btn:active {
   -webkit-transition: all 60ms ease;
   transition: all 60ms ease;
   opacity: .75;
 }
-button:focus, a.btn:focus {
+button.neeka-button:focus, a.btn:focus {
   outline: 1px dotted #959595;
   outline-offset: -4px;
 }
 
-button.regular, , a.btn.regular {
+button.neeka-button.regular, , a.btn.regular {
   color: #202129;
   background-color: #f2f2f2;
 }
 
-button.regular:hover, a.btn.regular:hover {
+button.neeka-button.regular:hover, a.btn.regular:hover {
   color: #202129;
   background-color: #e1e2e2;
   opacity: 1;
 }
 
-button.regular:active, a.btn.regular:active {
+button.neeka-button.regular:active, a.btn.regular:active {
   background-color: #d5d6d6;
   opacity: 1;
 }
 
-button.dark, a.btn.dark {
+button.neeka-button.dark, a.btn.dark {
   color: #FFFFFF;
   background: #161616;
 }
-button.dark:focus, a.btn.dark:focus {
+button.neeka-button.dark:focus, a.btn.dark:focus {
   outline: 1px dotted white;
   outline-offset: -4px;
 }
 
-button.green, a.btn.green {
+button.neeka-button.green, a.btn.green {
   color: #FFFFFF;
   background: #3dd28d;
 }
 
-button.blue, a.btn.blue {
+button.neeka-button.blue, a.btn.blue {
   color: #FFFFFF;
   background: #416dea;
 }
 
-button.salmon, a.btn.salmon {
+button.neeka-button.salmon, a.btn.salmon {
   color: #FFFFFF;
   background: #F32C52;
 }
 
-button.sun, a.btn.sun {
+button.neeka-button.sun, a.btn.sun {
   color: #f15c5c;
   background: #feee7d;
 }
 
-button:disabled, a.btn.disabled {
+button.neeka-button:disabled, a.btn.disabled {
   opacity: 0.75; 
   cursor: not-allowed;
 }

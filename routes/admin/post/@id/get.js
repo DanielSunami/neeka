@@ -18,7 +18,6 @@ module.exports = function(req, res){
 			res.redirect('/admin/post');
 		} else {
 			pageData.post = doc;
-			
 			res.send(render.admin_post(pageData));
 		}
 	});
