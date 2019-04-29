@@ -14,17 +14,28 @@
 	<meta name="robots" content="index,follow">
 
 	<!-- Open Graph Protocol -->
+	<meta property="og:locale" content>
+	<meta property="og:type" content>
+	<meta property="og:title" content="{{=it.site.name}}">
+	<meta property="og:description" content="{{=it.site.description}}">
 	<meta property="og:site_name" content="{{=it.site.name}}">
 	<meta property="og:url" content="//{{=it.site.url}}">
-	<meta property="og:title" content="{{=it.title}}">
-	<meta property="og:updated_time" content="{{=it.post.last_update.toISOString()}}">
+	<meta property="og:title" content="{{=it.site.name}}">
 
-	<meta property="article:published_time" content="{{=it.post.created_on.toISOString()}}">
-	<meta property="article:modified_time" content="{{=it.post.last_update.toISOString()}}">
+	<meta property="og:image" content>
+	<meta property="og:image:secure_url" content>
 
 	<!-- Google+ Snippets -->
 	<meta itemprop="url" content="//{{=it.site.url}}">
 	<meta itemprop="name" content="{{=it.site.name}}">
+
+	<!-- Twitter -->
+	<meta name="twitter:description" content="{{=it.site.description}}">
+	<meta name="twitter:title" content="{{=it.site.name}}">
+	<meta name="twitter:site" content><!-- @user -->
+	<meta name="twitter:image" content>
+
+	<link rel="apple-touch-icon" href>
 
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
