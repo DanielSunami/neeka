@@ -15,7 +15,7 @@ var user = new Schema({
 user.statics = {
 	
 	auth: function(e, pass, cb) {
-		return this.findOne( { email: new RegExp(e, 'i'), password: utils.criptoSenha(pass) }, function(err, doc){
+		return this.findOne( { email: e.toLowerCase().trim(), password: utils.criptoSenha(pass) }, function(err, doc){
 			if(err) cb(err, doc);
 			else if(doc) cb(err, doc);
 			else cb(err, doc);
