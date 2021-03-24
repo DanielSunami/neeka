@@ -25,8 +25,8 @@ post.query = {
 	 * 
 	 **/
 	publishedByDate: function(year, month, day, page, itens) {
-		page = page || 0;
-		itens = itens || 5;
+		page = parseInt(page) || 0;
+		itens = parseInt(itens) || 5;
 		--month; //month is zero-based
 		return this.find({ published: true, "created_on": {
 			"$gte": new Date(new Date(year, month, day).setUTCHours(0,0,0,0)),
