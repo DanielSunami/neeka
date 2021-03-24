@@ -1,7 +1,7 @@
 var render = require(rootDir+'/render');
 
 module.exports = function(req, res, next){
-	// If not a number redirect to other routes
+	// If @year is not a number redirect to other routes
 	if(isNaN(req.params.year)) return next();
 
 	req.query.itens = req.query.itens || 5;

@@ -1,7 +1,9 @@
 var render = require(rootDir+'/render'),
 	fecha = require('fecha');
 
-module.exports = function(req, res){
+module.exports = function(req, res, next){
+	// If @year is not a number redirect to other routes
+	if(isNaN(req.params.year)) return next();
 
 	req.query.itens = req.query.itens || 5;
 	req.query.page = --req.query.page || 0;

@@ -1,6 +1,8 @@
 var render = require(rootDir+'/render');
 
-module.exports = function(req, res){
+module.exports = function(req, res, next){
+	// If @year is not a number redirect to other routes
+	if(isNaN(req.params.year)) return next();
 
 	var pageData = {
 		title: "",
