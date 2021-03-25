@@ -115,12 +115,14 @@ meta.statics = {
 	addToYear: function(year, done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
 			var found = false;
-			doc.byYear.forEach(function(item, index, arr) {
-				if(item.year == year){
-					arr[index].qty++;
+
+			for (var i = 0; i < doc.byYear.length; i++) {
+				if(doc.byYear[i].year == year){
+					doc.byYear[i].qty++;
 					found = true;
 				}
-			});
+			}
+
 			if(!found) doc.byYear.push({'year': year, 'qty':1});
 			doc.save(done);
 		});
@@ -132,13 +134,15 @@ meta.statics = {
 	 */
 	addToYearMonth: function(year, month, done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
-			var found = false;
-			doc.byYearMonth.forEach(function(item, index, arr) {
-				if(item.yearMonth == year+'-'+month){
-					arr[index].qty++;
+			let found = false;
+
+			for (let i = 0; i < doc.byYearMonth.length; i++) {
+				if(doc.byYearMonth[i].yearMonth == year+'-'+month){
+					doc.byYearMonth[i].qty++;
 					found = true;
 				}
-			});
+			}
+
 			if(!found) doc.byYearMonth.push({'yearMonth': year+'-'+month, 'qty':1});
 			doc.save(done);
 		});
@@ -149,13 +153,15 @@ meta.statics = {
 	 */
 	addToAuthor: function(author, done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
-			var found = false;
-			doc.byAuthor.forEach(function(item, index, arr) {
-				if(item.author.toString() == author){
-					item.qty++;
+			let found = false;
+
+			for (let i = 0; i < doc.byAuthor.length; i++) {
+				if(doc.byAuthor[i].author.toString() == author){
+					doc.byAuthor[i].qty++;
 					found = true;
 				}
-			});
+			}
+
 			if(!found) doc.byAuthor.push({'author': author, 'qty':1});
 			doc.save(done);
 		});
@@ -177,26 +183,30 @@ meta.statics = {
 
 	removeFromYear: function(year, done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
-			var found = false;
-			doc.byYear.forEach(function(item, index, arr) {
-				if(item.year == year){
-					arr[index].qty--;
+			let found = false;
+
+			for (let i = 0; i < doc.byYear.length; i++) {
+				if(doc.byYear[i].year == year){
+					doc.byYear[i].qty--;
 					found = true;
 				}
-			});
+			};
+
 			if(found) doc.save(done);
 		});
 	},
 	
 	removeFromYearMonth: function(year, month, done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
-			var found = false;
-			doc.byYearMonth.forEach(function(item, index, arr) {
-				if(item.yearMonth == year+'-'+month){
-					arr[index].qty--;
+			let found = false;
+
+			for (let i = 0; i < doc.byYearMonth.length; i++) {
+				if(doc.byYearMonth[i].yearMonth == year+'-'+month){
+					doc.byYearMonth[i].qty--;
 					found = true;
 				}
-			});
+			};
+
 			if(found) doc.save(done);
 		});
 	},
@@ -206,13 +216,15 @@ meta.statics = {
 	 */
 	removeFromAuthor: function(author, done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
-			var found = false;
-			doc.byAuthor.forEach(function(item, index, arr) {
-				if(item.author.toString() == author){
-					item.qty--;
+			let found = false;
+
+			for (let i = 0; i < doc.byAuthor.length; i++) {
+				if(doc.byAuthor[i].author.toString() == author){
+					doc.byAuthor[i].qty--;
 					found = true;
 				}
-			});
+			};
+
 			if(found) doc.save(done);
 		});
 	}
