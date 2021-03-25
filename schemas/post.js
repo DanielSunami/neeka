@@ -151,8 +151,8 @@ meta.statics = {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
 			var found = false;
 			doc.byAuthor.forEach(function(item, index, arr) {
-				if(item.author.equals(author)){
-					arr[index].qty++;
+				if(item.author.toString() == author){
+					item.qty++;
 					found = true;
 				}
 			});
@@ -208,8 +208,8 @@ meta.statics = {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
 			var found = false;
 			doc.byAuthor.forEach(function(item, index, arr) {
-				if(item.author.equals(author)){
-					arr[index].qty--;
+				if(item.author.toString() == author){
+					item.qty--;
 					found = true;
 				}
 			});
