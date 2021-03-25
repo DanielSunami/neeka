@@ -103,22 +103,16 @@ var meta = new Schema({
 });
 
 meta.statics = {
-	
-	addToPublished: function() {
-		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
-			doc.published++;
-			doc.save();
-		});
+
+	addToPublished: function(done) {
+		this.findByIdAndUpdate('5a5ab903486beb7fce003a39', { $inc: { published: 1 } }).exec(done);
 	},
 
-	addToDraft: function() {
-		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
-			doc.draft++;
-			doc.save();
-		});
+	addToDraft: function(done) {
+		this.findByIdAndUpdate('5a5ab903486beb7fce003a39', { $inc: { draft: 1 } }).exec(done);
 	},
 	
-	addToYear: function(year) {
+	addToYear: function(year, done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
 			var found = false;
 			doc.byYear.forEach(function(item, index, arr) {
@@ -128,7 +122,7 @@ meta.statics = {
 				}
 			});
 			if(!found) doc.byYear.push({'year': year, 'qty':1});
-			doc.save();
+			doc.save(done);
 		});
 	},
 	
@@ -136,7 +130,7 @@ meta.statics = {
 	 * @year - full year format YYYY
 	 * @month - zero based, 0 = jan & 11 = dez
 	 */
-	addToYearMonth: function(year, month) {
+	addToYearMonth: function(year, month, done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
 			var found = false;
 			doc.byYearMonth.forEach(function(item, index, arr) {
@@ -146,14 +140,14 @@ meta.statics = {
 				}
 			});
 			if(!found) doc.byYearMonth.push({'yearMonth': year+'-'+month, 'qty':1});
-			doc.save();
+			doc.save(done);
 		});
 	},
 
 	/*
 	 * @author - author's id
 	 */
-	addToAuthor: function(author) {
+	addToAuthor: function(author, done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
 			var found = false;
 			doc.byAuthor.forEach(function(item, index, arr) {
@@ -163,25 +157,25 @@ meta.statics = {
 				}
 			});
 			if(!found) doc.byAuthor.push({'author': author, 'qty':1});
-			doc.save();
+			doc.save(done);
 		});
 	},
 
-	removeFromPublished: function() {
+	removeFromPublished: function(done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
 			if(doc.published > 0) doc.published--;
-			doc.save();
+			doc.save(done);
 		});
 	},
 
-	removeFromDraft: function() {
+	removeFromDraft: function(done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
 			if(doc.draft > 0) doc.draft--;
-			doc.save();
+			doc.save(done);
 		});
 	},
 
-	removeFromYear: function(year) {
+	removeFromYear: function(year, done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
 			var found = false;
 			doc.byYear.forEach(function(item, index, arr) {
@@ -190,11 +184,11 @@ meta.statics = {
 					found = true;
 				}
 			});
-			if(found) doc.save();
+			if(found) doc.save(done);
 		});
 	},
 	
-	removeFromYearMonth: function(year, month) {
+	removeFromYearMonth: function(year, month, done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
 			var found = false;
 			doc.byYearMonth.forEach(function(item, index, arr) {
@@ -203,14 +197,14 @@ meta.statics = {
 					found = true;
 				}
 			});
-			if(found) doc.save();
+			if(found) doc.save(done);
 		});
 	},
 
 	/*
 	 * @author - author's id
 	 */
-	removeFromAuthor: function(author) {
+	removeFromAuthor: function(author, done) {
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
 			var found = false;
 			doc.byAuthor.forEach(function(item, index, arr) {
@@ -219,7 +213,7 @@ meta.statics = {
 					found = true;
 				}
 			});
-			if(!found) doc.save();
+			if(found) doc.save(done);
 		});
 	}
 }
