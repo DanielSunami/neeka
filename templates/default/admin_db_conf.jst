@@ -6,19 +6,17 @@
 <body>
 <div class="page-wrap">
 	{{#def.admin_header}}
-	{{var fecha = require('fecha');}}
 	<div class="container">
 		<div class="max-width-4 mx-auto">
 
-			<form method="POST" name="user" action="/admin/user/{{=it.user._id}}"> 
-				<input type="hidden" name="id"/>
+			<form method="POST" name="dbconf" action="/admin/databaseConf"> 
 								
 				<div class="clearfix mxn1">
 					<div class="sm-col sm-col-12 px1 my2">
 						<div class="card dark">
 							<!-- card header -->
 							<div class="clearfix card-head">
-								<div class="sm-col sm-col-12 center" style="padding-left: 0">{{=it.user.fullName}}</div>
+								<div class="sm-col sm-col-12 center" style="padding-left: 0">Database Configuration</div>
 							</div>
 
 							<!-- card body / begin -->
@@ -26,28 +24,28 @@
 								<div class="clearfix">
 									<div class="sm-col sm-col-6 px1">
 										<div class="form-group">
-											<label>Firstname
-											<input type="text" name="firstname" value="{{=it.user.firstname}}"/></label>
+											<label>Template
+											<input type="text" name="template" value="{{=it.site.template}}"/></label>
 										</div>
 									</div>
 									<div class="sm-col sm-col-6 px1">
 										<div class="form-group">
-											<label>Lastname
-											<input type="text" name="lastname" value="{{=it.user.lastname}}"/></label>
+											<label>Site Name
+											<input type="text" name="name" value="{{=it.site.name}}"/></label>
 										</div>
 									</div>
 								</div>
 								<div class="clearfix mt3">
 									<div class="sm-col sm-col-6 px1">
 										<div class="form-group">
-											<label>Website
-											<input type="text" name="website" value="{{=it.user.website}}"/></label>
+											<label>URL
+											<input type="text" name="url" value="{{=it.site.url}}"/></label>
 										</div>
 									</div>
 									<div class="sm-col sm-col-6 px1">
 										<div class="form-group">
-											<label>Birthday
-											<input type="text" name="birthday" value="{{=fecha.format(it.user.birthday, 'regular')}}"/></label>
+											<label>Description
+											<input type="text" name="description" value="{{=it.site.description}}"/></label>
 											<small>day-month-year - 21/01/1990 </small>
 										</div>
 									</div>
@@ -55,30 +53,14 @@
 								<div class="clearfix mt3">
 									<div class="sm-col sm-col-6 px1">
 										<div class="form-group">
-											<label>Email
-											<input type="text" name="email" value="{{=it.user.email}}" readonly/></label>
+											<label>Keywords
+											<input type="text" name="keywords" value="{{=it.site.keywords}}"/></label>
 										</div>
 									</div>
 									<div class="sm-col sm-col-6 px1">
 										<div class="form-group">
-											<label>Password
-											<input type="password" name="password"/></label>
-										</div>
-									</div>
-								</div>
-								<div class="clearfix mt3">
-									<div class="sm-col sm-col-6 px1">
-										<span class="h3">Preferences</span>
-									</div>
-								</div>
-								<div class="clearfix mt3">
-									<div class="sm-col sm-col-6 px1">
-										<div class="form-group">
-											<div>Article Editor</div>
-											<label class="col col-6">Trix (WYSIWYG)
-											<input type="radio" name="preferences_editor" value="trix" {{? it.user.preferences.editor == 'trix' }}checked {{?}}/></label>
-											<label class="col col-6">Raw (Pure HTML)
-											<input type="radio" name="preferences_editor" value="raw" {{? it.user.preferences.editor == 'raw' }}checked {{?}}/></label>
+											<label>Google Analytics UID
+											<input type="text" name="password" value="{{=it.site.gaUID}}"/></label>
 										</div>
 									</div>
 								</div>
@@ -87,13 +69,9 @@
 										Save
 										<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
 									</button>
-									<button id="btn-delete" type="button" class="neeka-button salmon col-right col-3 mx1 ld ld-ext-right">
-										Delete
-										<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
-									</button>
 								</div>
 							</div>
-							<!-- card body / end -->
+							<!-- card body / begin -->
 						</div>
 					</div>
 				</div>
@@ -110,7 +88,7 @@
 	document.addEventListener('DOMContentLoaded', function () {
 
 		
-		document.forms.user.querySelector('#btn-save').onclick = function(){
+		document.forms.settings.querySelector('#btn-save').onclick = function(){
 			var _self = this;
 	
 			_self.classList.add("running");
@@ -123,8 +101,6 @@
 				if(res.ok) {
 					alertify.success('Saved!');
 					setTimeout(function(){document.location.pathname = "/admin/";},600);
-				} else {
-					/* TODO handle error */ 
 				}
 			};
 			req.open(_self.form.method, _self.form.action, true);
@@ -132,27 +108,6 @@
 			
 			if(document.querySelector("[name=password]").value == "") document.querySelector("[name=password]").disabled = "disabled";
 			req.send(_self.form.serialize());
-		};
-		
-
-		document.forms.user.querySelector('#btn-delete').onclick = function(){
-			var _self = this;
-	
-			_self.classList.add("running");
-			_self.setAttribute("disabled","");
-			var req = new XMLHttpRequest();
-			req.onload = function(){
-				var res = JSON.parse(this.responseText);
-				_self.classList.remove("running");
-				_self.removeAttribute("disabled");
-				if(res.ok) {
-					alertify.success('Deleted!');
-					setTimeout(function(){document.location.pathname = "/admin/";},600);
-				}
-			};
-			req.open("DELETE", _self.form.action, true);
-			
-			req.send();
 		};
 
 		[].map.call(document.querySelectorAll('input'), function(input) {

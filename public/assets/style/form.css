@@ -9,7 +9,7 @@ input, select, textarea {
 	vertical-align: middle;
 	display: block;
 	width: 100%;
-	padding: 0 8px;
+	padding: 8px;
 	font-size: 16px;
 	border-radius: 3px;
 }
@@ -39,7 +39,10 @@ textarea[readonly] {
 
 .form-group {
 	display: block;
-	margin: 0em 0px 1.2em 0;
+}
+
+.form-group + .form-group {
+	margin: 1.8em 0 0 0;
 }
 
 .form-group > input,
@@ -48,4 +51,12 @@ textarea[readonly] {
 .form-group > label,
 .form-group > small {
 	display: block;
+}
+
+.form-group > small {
+	position: absolute;
+}
+
+.form-group > textarea {
+	resize: vertical;
 }

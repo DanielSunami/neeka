@@ -1,5 +1,4 @@
-var mongoose = require('mongoose')
-	sessionManager = require(rootDir+'/lib/sessionManager.js');
+let sessionManager = require(rootDir+'/lib/sessionManager.js');
 
 module.exports = function(req, res, next){
 
@@ -10,7 +9,7 @@ module.exports = function(req, res, next){
 	} else {
 		req.body.password = utils.criptoSenha(req.body.password);
 		req.body.permissions = [0,1,2,3,4,5,6,7,8,9];
-		model['user'].create(req.body,function(err, novo){
+		model.user.create(req.body,function(err, novo){
 			if(err) {
 				console.log(err);
 				res.json({ok:false});

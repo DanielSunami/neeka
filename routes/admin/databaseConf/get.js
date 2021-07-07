@@ -1,33 +1,38 @@
 var render = require(rootDir+'/render');
 
 module.exports = function(req, res){
-	res.send(render.admin_new_post({
-		page: {
-			title:""
-		},
+
+	let mongoConf = {};
+	try{
+		mongoConf = require(rootDir+'/dbconf.json');
+	} catch(err) { 
+		mongoConf = {
+			user: '',
+			password: '',
+			hostname: '',
+			port: '',
+			dbname: ''
+		}
+	}
+
+	// user and password never send to browser for security reasons
+	mongoConf.user = '';
+	mongoConf.password = '';
+
+	let pageData = {
+		title: "Administration",
+		subtitle: "",
 		site: {
-			name: "Akafrx",
-			url: "akafrx.com"
+			name: NEEKA.name,
+			url: NEEKA.url,
+			description: NEEKA.description,
+			keywords: NEEKA.keywords,
+			gaUID: NEEKA.google_analytics,
+			template: NEEKA.template
 		},
-		posts: [{
-			url: "teste-teste",
-			title: "Teste teste",
-			preview: "esse é um texto longo. esse é um texto longo. esse é um texto longo. esse é um texto longo. esse é um texto longo. esse é um texto longo.",
-			author: {
-				name: "Daniel Sunami",
-				website: "akafrx.com"
-			},
-			date: new Date()
-		},
-		{
-			url: "teste-teste",
-			title: "Teste teste",
-			preview: "esse é um texto longo. esse é um texto longo. esse é um texto longo. esse é um texto longo. esse é um texto longo. esse é um texto longo.",
-			author: {
-				name: "Daniel Sunami",
-				website: "akafrx.com"
-			},
-			date: new Date()
-		}]
-	}));
+		db: mongoConf,
+		url: NEEKA.url+"/admin/databaseConf"
+	};
+
+	res.send(render.admin_db_conf(pageData));
 };

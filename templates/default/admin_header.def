@@ -8,7 +8,7 @@
 		<div class="navbar-menu">
 			<ul class="list-reset">
 				<li><a href="/admin/tags">Tags</a></li>
-				<li><a href="/admin/post">Content Management</a></li>
+				<li><a href="/admin/posts">Content Management</a></li>
 				<li><a href="/admin/user">Users</a></li>
 				<li><a href="/admin/settings">Settings</a></li>
 				<li><a href="/admin/databaseConf">Database Credentials</a></li>

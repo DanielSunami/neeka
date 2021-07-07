@@ -1,33 +1,34 @@
-var render = require(rootDir+'/render');
+const utils = require(rootDir+'/lib/utils');
 
-module.exports = function(req, res){
-	res.send(render.admin_new_post({
-		page: {
-			title:""
-		},
+module.exports = [
+
+function(req, res, next) {
+
+	req.render = utils.requireUncached(rootDir + '/render/admin_settings');
+	next();
+},
+
+function(req, res) {
+
+	let obj = {};
+	Object.assign(obj, NEEKA);
+	delete obj.smtp_pass;
+
+	let pageData = {
+		title: "Administration",
+		subtitle: "",
 		site: {
-			name: "Akafrx",
-			url: "akafrx.com"
+			name: NEEKA.name,
+			url: NEEKA.url,
+			description: NEEKA.description,
+			keywords: NEEKA.keywords,
+			gaUID: NEEKA.gaUID,
+			template: NEEKA.template
 		},
-		posts: [{
-			url: "teste-teste",
-			title: "Teste teste",
-			preview: "esse é um texto longo. esse é um texto longo. esse é um texto longo. esse é um texto longo. esse é um texto longo. esse é um texto longo.",
-			author: {
-				name: "Daniel Sunami",
-				website: "akafrx.com"
-			},
-			date: new Date()
-		},
-		{
-			url: "teste-teste",
-			title: "Teste teste",
-			preview: "esse é um texto longo. esse é um texto longo. esse é um texto longo. esse é um texto longo. esse é um texto longo. esse é um texto longo.",
-			author: {
-				name: "Daniel Sunami",
-				website: "akafrx.com"
-			},
-			date: new Date()
-		}]
-	}));
-};
+		url: NEEKA.url+"/admin/settings",
+		NEEKA: obj
+	};
+
+	res.send(req.render(pageData));
+}
+];

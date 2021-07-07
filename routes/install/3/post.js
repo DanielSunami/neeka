@@ -1,5 +1,4 @@
-var mongoose = require('mongoose'),
-	fs = require('fs');
+let fs = require('fs');
 
 module.exports = function(req, res, next){
 

@@ -1,5 +1,4 @@
-var mongoose = require('mongoose'),
-	fs = require('fs'),
+let fs = require('fs'),
 	util = require('util');
 
 module.exports = function(req, res, next){
@@ -30,7 +29,7 @@ module.exports = function(req, res, next){
 				obj.port,
 				obj.dbname);
 
-		mongoose.connect(mongoUri, {server:{auto_reconnect:true}});
+		require(rootDir+'/lib/mongooseConnect');
 		res.json({ok:true});
 	}
 };

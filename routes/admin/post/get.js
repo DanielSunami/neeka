@@ -1,8 +1,28 @@
-var render = require(rootDir+'/render');
+const utils = require(rootDir+'/lib/utils');
 
-module.exports = function(req, res){
+module.exports = [
+
+function(req, res, next) {
+	req.render = utils.requireUncached(rootDir+'/render/admin_post');
+	next();
+},
+
+function(req, res, next) {
+	req.data = {};
+
+	model.user
+	  .findById(req.session.user.id)
+	  .select('preferences')
+	  .lean()
+	  .exec(function(err, user) {
+		req.data.user = user;
+		next();
+	});
+},
+
+function(req, res) {
 	
-	var pageData = {
+	const pageData = {
 		title: "Administration",
 		subtitle: "",
 		site: {
@@ -20,8 +40,10 @@ module.exports = function(req, res){
 			published: true,
 			keywords: "",
 			description: ""
-		}
+		},
+		user: req.data.user
 	};
 
-	res.send(render.admin_post(pageData));
-};
+	res.send(req.render(pageData));
+}
+];

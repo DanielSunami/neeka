@@ -8,6 +8,9 @@ var user = new Schema({
 	password: { type: String, required: true },
 	birthday: Date,
 	permissions:  { type: Array, default: [] },
+	preferences: {
+		editor: { type: String, default: 'trix' }
+	},
 	created_on: { type: Date, default: Date.now },
 	last_update: { type: Date, default: Date.now }
 });
@@ -24,7 +27,7 @@ user.statics = {
 }
 
 user.virtual('fullName').get(function () {
-  return this.firstname + ' ' + this.lastname;
+	return this.firstname + ' ' + this.lastname;
 });
 
 module.exports = user;

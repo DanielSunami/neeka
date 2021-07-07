@@ -74,7 +74,7 @@
 <option value="lua">Lua</option>
 <option value="makefile">Makefile</option>
 <option value="markdown">Markdown</option>
-<option value="markup">Markup</option>
+<option value="markup">Markup, HTML, XML</option>
 <option value="matlab">MATLAB</option>
 <option value="mel">MEL</option>
 <option value="mizar">Mizar</option>

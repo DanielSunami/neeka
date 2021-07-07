@@ -11,7 +11,11 @@ var post = new Schema({
 	description: String,
 	tags: { type: [Schema.Types.ObjectId], index: true, ref: 'tags'},
 	created_on: { type: Date, default: Date.now, index: -1 },
-	last_update: { type: Date, default: Date.now }
+	last_update: { type: Date, default: Date.now },
+	updates: [{ 
+		user: { type: Schema.Types.ObjectId, ref: 'users' },
+		date: { type: Date, default: Date.now }
+	}]
 });
 
 post.query = {
@@ -113,10 +117,10 @@ meta.statics = {
 	},
 	
 	addToYear: function(year, done) {
-		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
-			var found = false;
+		this.findById('5a5ab903486beb7fce003a39', function(err, doc) {
+			let found = false;
 
-			for (var i = 0; i < doc.byYear.length; i++) {
+			for (let i = 0; i < doc.byYear.length; i++) {
 				if(doc.byYear[i].year == year){
 					doc.byYear[i].qty++;
 					found = true;
@@ -133,7 +137,7 @@ meta.statics = {
 	 * @month - zero based, 0 = jan & 11 = dez
 	 */
 	addToYearMonth: function(year, month, done) {
-		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
+		this.findById('5a5ab903486beb7fce003a39', function(err, doc) {
 			let found = false;
 
 			for (let i = 0; i < doc.byYearMonth.length; i++) {
@@ -152,7 +156,7 @@ meta.statics = {
 	 * @author - author's id
 	 */
 	addToAuthor: function(author, done) {
-		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
+		this.findById('5a5ab903486beb7fce003a39', function(err, doc) {
 			let found = false;
 
 			for (let i = 0; i < doc.byAuthor.length; i++) {
@@ -168,21 +172,21 @@ meta.statics = {
 	},
 
 	removeFromPublished: function(done) {
-		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
+		this.findById('5a5ab903486beb7fce003a39', function(err, doc) {
 			if(doc.published > 0) doc.published--;
 			doc.save(done);
 		});
 	},
 
 	removeFromDraft: function(done) {
-		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
+		this.findById('5a5ab903486beb7fce003a39', function(err, doc) {
 			if(doc.draft > 0) doc.draft--;
 			doc.save(done);
 		});
 	},
 
 	removeFromYear: function(year, done) {
-		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
+		this.findById('5a5ab903486beb7fce003a39', function(err, doc) {
 			let found = false;
 
 			for (let i = 0; i < doc.byYear.length; i++) {
@@ -197,7 +201,7 @@ meta.statics = {
 	},
 	
 	removeFromYearMonth: function(year, month, done) {
-		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
+		this.findById('5a5ab903486beb7fce003a39', function(err, doc) {
 			let found = false;
 
 			for (let i = 0; i < doc.byYearMonth.length; i++) {
@@ -215,7 +219,7 @@ meta.statics = {
 	 * @author - author's id
 	 */
 	removeFromAuthor: function(author, done) {
-		this.findById('5a5ab903486beb7fce003a39', function(err, doc){
+		this.findById('5a5ab903486beb7fce003a39', function(err, doc) {
 			let found = false;
 
 			for (let i = 0; i < doc.byAuthor.length; i++) {

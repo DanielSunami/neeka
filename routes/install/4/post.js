@@ -1,5 +1,4 @@
-var mongoose = require('mongoose'),
-	fs = require('fs');
+let fs = require('fs');
 
 module.exports = function(req, res, next){
 
@@ -31,7 +30,7 @@ module.exports = function(req, res, next){
 		global.NEEKA = obj;
 		global.mailer = require(rootDir+'/lib/mailer.js');
 
-		utils.installed = true;
-		res.redirect('/');
+		global.installed = true;
+		res.json({ ok: true, redirect: '/' });
 	}
 };

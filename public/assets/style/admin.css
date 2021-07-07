@@ -1,13 +1,8 @@
-button {
-	width: 100%;
-	justify-content: space-around;
-}
-
-button.large {
+button.neeka-button.large {
 	font-size: 2em;
 }
 
-button > i {
+button.neeka-button > i {
 	font-size: 1em!important;
 	color: rgba(0, 0, 0, 0.28);
 }
@@ -46,7 +41,7 @@ button > i {
 	display:none;
 	background-color:#232736;
 	clear:left;
-	padding: 10px 5px 1px 5px;
+	padding: 10px;
 }
 
 .tab-frame .tab-input:nth-of-type(1):checked ~ .tab:nth-of-type(1),

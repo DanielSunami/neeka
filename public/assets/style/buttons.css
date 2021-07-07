@@ -51,13 +51,16 @@ button.neeka-button:focus, a.btn:focus {
   outline-offset: -4px;
 }
 
-button.neeka-button.regular, , a.btn.regular {
-  color: #202129;
+button.neeka-button.regular i, a.btn.regular i, 
+button.neeka-button.regular, a.btn.regular {
+  color: #24292e!important;
+}
+
+button.neeka-button.regular, a.btn.regular {
   background-color: #f2f2f2;
 }
 
 button.neeka-button.regular:hover, a.btn.regular:hover {
-  color: #202129;
   background-color: #e1e2e2;
   opacity: 1;
 }

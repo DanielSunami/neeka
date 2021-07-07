@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{{#def.admin_head}}
+</head>
+<body>
+<div class="page-wrap">
+	{{#def.admin_header}}
+	<div class="container">
+		<div class="max-width-4 mx-auto">
+
+			<div class="clearfix mxn1">
+				<div class="sm-col sm-col-12 px1 my2">
+					<div class="clearfix">
+						<a href="/admin/post" class="btn green col-right col-3 mx1">
+							New Post
+						</a>
+					</div>
+					<div class="table mt3">
+						<!-- table header -->
+						<div class="clearfix table-row header">
+							<div class="sm-col cell" style="width: 15%">Title</div>
+							<div class="sm-col cell" style="width: 15%">Published</div>
+							<div class="sm-col cell" style="width: 30%">Author</div>
+							<div class="sm-col cell" style="width: 15%">Created On</div>
+							<div class="sm-col cell" style="width: 15%">Last Update</div>
+							<div class="sm-col cell" style="width: 10%">Edit</div>
+						</div>
+						<!-- rows -->
+						{{var fecha =  require('fecha');}}
+						{{~it.posts :post:index}}
+						<div class="clearfix table-row">
+							<div class="sm-col cell" style="width: 15%">{{=post.title}}</div>
+							<div class="sm-col cell" style="width: 15%">{{? post.published }} Yes {{??}} No {{?}}</div>
+							<div class="sm-col cell" style="width: 30%">{{=post.author.firstname}} {{=post.author.lastname}}</div>
+							<div class="sm-col cell" style="width: 15%">{{=fecha.format(post.created_on, 'regular')}}</div>
+							<div class="sm-col cell" style="width: 15%">{{=fecha.format(post.last_update, 'regular')}}</div>
+							<div class="sm-col cell" style="width: 10%">
+								<a href="/admin/post/{{=post._id}}">
+									<i class="material-icons">edit</i>
+								</a>
+							</div>
+						</div>
+						{{~}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+	{{#def.footer}}
+	<script type="text/javascript" src="/assets/lib/prism.js"></script>
+	<script src="/assets/lib/serialize.min.js"></script>
+	<script type="text/javascript" src="/assets/lib/alertify.min.js"></script>
+	<script type="text/javascript">
+	
+
+		[].map.call(document.querySelectorAll('form input'), function(input){
+			input.onkeypress = function(e) {if ( e.which == 13 ) e.preventDefault();}
+		});
+
+	</script>
+</body>
+</html>

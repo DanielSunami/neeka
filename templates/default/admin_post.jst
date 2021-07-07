@@ -41,7 +41,7 @@
 							<label>Keywords
 							<input type="text" name="keywords" value="{{=it.post.keywords}}"/></label>
 						</div>
-						<div class="form-group">
+						<div class="form-group" style="margin-bottom: 1rem;">
 							<label>Description
 							<input type="text" name="description" value="{{=it.post.description}}"/></label>
 							<small>Important. Usually used in shared link thumbnails like facebook.</small>
@@ -51,15 +51,37 @@
 				</div>
 
 				<div>
-					<div class="form-group">
-						<label>Article</label>
-<!--<i class="material-icons">code</i><input class="awesomplete" data-list="#lang-list" /><datalist id="mylist">{{#def.lang_options}}</datalist>-->
-							<input id="article" value="{{=it.post.preview}}{{? it.post.preview}}--preview--{{?}}{{=it.post.body}}" type="hidden">
-  							<trix-editor input="article"></trix-editor>
-  							<small>Use <i>--preview--</i> to break text.</small>
-					</div>
 					<input type="hidden" name="preview"/>
 					<input type="hidden" name="body"/>
+					<div class="form-group">
+						<label>Article</label>
+						{{? it.user.preferences.editor == 'trix' }}
+						{{ 
+							function toHtmlEntities(str) {
+							    return str.replace(/./gm, function(s) {
+							        return (s.match(/[a-z0-9\s]+/i)) ? s : "&#" + s.charCodeAt(0) + ";";
+							    });
+							};
+
+							function fromHtmlEntities(string) {
+							    return (string+"").replace(/&#\d+;/gm,function(s) {
+							        return String.fromCharCode(s.match(/\d+/gm)[0]);
+							    })
+							};
+						}}
+						<input id="article" value="{{=toHtmlEntities(it.post.preview)}}{{? it.post.preview}}--preview--{{?}}{{=toHtmlEntities(it.post.body)}}" type="hidden">
+						<trix-editor input="article"></trix-editor>
+						<small>Use <i>--preview--</i> to break text.</small>
+						{{??}}
+						<datalist id="mylist">{{#def.lang_options}}</datalist>
+						<div class="flex clearfix neeka-raw-editor-toolbar mb1">
+							<button type="button" class="neeka-button regular toolbar-code"><i class="material-icons">code</i></button>
+							<button type="button" class="neeka-button regular toolbar-spoiler">Spoiler</button>
+						</div>
+						<textarea id="article" spellcheck="false">{{=it.post.preview}}{{? it.post.preview}}--preview--{{?}}{{=it.post.body}}</textarea>
+						<small>Use <i>--preview--</i> to break text.</small>
+						{{?}}
+					</div>
 					
 					<div class="form-group">
 						<label>Tags</label>
@@ -67,16 +89,22 @@
 						/* tag margin fix */
 						<small style="word-wrap: normal;">separated by comma (,)</small>
 					</div>
-					<div class="clearfix">
-						<button type="button" id="btn-save-quit" class="neeka-button green col-right col-3 ml1 ld ld-ext-right">
-							Save & Quit
+					<div class="flex clearfix mt3 justify-end">
+						<a href="/admin" class="btn regular col-right col-3">Cancel</a>
+						{{? it.post._id != '' }}
+						<button type="button" id="btn-delete" class="neeka-button salmon col-right col-3 ml2 ld ld-ext-right">
+							Delete
 							<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
 						</button>
-						<button type="button" id="btn-save" class="neeka-button green col-right col-3 mx1 ld ld-ext-right">
+						{{?}}
+						<button type="button" id="btn-save" class="neeka-button green col-right col-3 ml2 ld ld-ext-right">
 							Save
 							<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
 						</button>
-						<a href="/admin" class="btn salmon col-right col-3 mx1">Cancel</a>
+						<button type="button" id="btn-save-quit" class="neeka-button green col-right col-3 ml2 ld ld-ext-right">
+							Save & Quit
+							<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
+						</button>
 					</div>
 				</div>
 			</form>
@@ -92,75 +120,114 @@
 	<script type="text/javascript" src="/assets/lib/awesomplete.min.js"></script>
 	<script type="text/javascript" src="/assets/lib/trix.js"></script>
 	<script type="text/javascript">
-		new Taggle("tags",{hiddenInputName: "tag",placeholder:""});
+		document.addEventListener('DOMContentLoaded', function () {
 
-		document.post.title.onkeyup = function(e){
-			document.post.slug.value = 
-				/* normalize title to slug*/
-				this.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/ /g,"-");
-		};
+			new Taggle("tags",{hiddenInputName: "tag",placeholder:""});
 
-		[].map.call(document.querySelectorAll("form input"), function(input){
-			input.onkeypress = function(e) {if ( e.which == 13 ) e.preventDefault();}
+			document.post.title.onkeyup = function(e){
+				document.post.slug.value = 
+					/* normalize title to slug*/
+					this.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/ /g,"-");
+			};
+
+			[].map.call(document.querySelectorAll("form input"), function(input){
+				input.onkeypress = function(e) {if ( e.which == 13 ) e.preventDefault();}
+			});
+
+			document.querySelector("#btn-save").onclick = function(e) {
+				var _self = this,
+					arr = document.querySelector("#article").value.split(/--preview--/);
+
+				_self.classList.add("running");
+
+				if(arr.length > 1){
+					document.post.preview.value = arr[0];
+					document.post.body.value = arr[1];
+				} else document.post.body.value = document.querySelector("#article").value;
+
+				var req = new XMLHttpRequest();
+				req.onload = function(){
+					var res = JSON.parse(this.responseText);
+					_self.classList.remove("running");
+					_self.removeAttribute("disabled");
+					if(res.ok){
+						if(!document.querySelector("input[name=id]").value) {
+							document.querySelector("input[name=id]").value = res.id;
+							document.post.action="/admin/post/"+res.id;
+						}
+						alertify.success("Saved!");
+					} 
+					else alertify.error("Something went wrong =(");
+				};
+				req.open(_self.form.method, _self.form.action, true);
+				req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				
+				req.send(_self.form.serialize());
+
+			};
+
+			document.querySelector("#btn-save-quit").onclick = function(e) {
+				var _self = this,
+					arr = document.querySelector("#article").value.split(/--preview--/);
+
+				_self.classList.add("running");
+
+				if(arr.length > 1){
+					document.post.preview.value = arr[0];
+					document.post.body.value = arr[1];
+				} else document.post.body.value = document.querySelector("#article").value;
+
+				var req = new XMLHttpRequest();
+				req.onload = function(){
+					var res = JSON.parse(this.responseText);
+					_self.classList.remove("running");
+					_self.removeAttribute("disabled");
+					if(res.ok) window.location.pathname = "/admin";
+					else alertify.error('Something went wrong =(');
+				};
+				req.open(_self.form.method, _self.form.action, true);
+				req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				
+				req.send(_self.form.serialize());
+
+			};
+
+			{{? it.post._id != '' }}
+			document.querySelector("#btn-delete").onclick = function(e) {
+				var _self = this;
+
+				_self.classList.add("running");
+
+				var req = new XMLHttpRequest();
+				req.onload = function(){
+					var res = JSON.parse(this.responseText);
+					_self.classList.remove("running");
+					_self.removeAttribute("disabled");
+					if(res.ok) window.location.pathname = "/admin";
+					else alertify.error('Something went wrong =(');
+				};
+				req.open("DELETE", _self.form.action, true);
+
+				req.send();
+			};
+			{{?}}
+
+			document.querySelector(".neeka-raw-editor-toolbar .toolbar-code").onclick = function(e) {
+				alertify.prompt()
+				  .setContent("<input class='awesomplete' data-list='#lang-list' />")
+				  .set('onok', function(closeEvent) {
+				  	var lang = document.querySelector("input.awesomplete").value;
+				  	var code = "<pre><code class='language-" + lang + "'></code></pre>";
+				  	document.querySelector("#article").value += code;
+				  })
+				  .show();
+				new Awesomplete(".awesomplete");
+			};
+
+			document.querySelector(".neeka-raw-editor-toolbar .toolbar-spoiler").onclick = function(e) {
+				document.querySelector("#article").value += "<spoiler></spoiler>";
+			};
 		});
-
-		document.querySelector("#btn-save").onclick = function(e) {
-			var _self = this,
-				arr = document.querySelector("#article").value.split(/--preview--/);
-
-			_self.classList.add("running");
-
-			if(arr.length > 1){
-				document.post.preview.value = arr[0];
-				document.post.body.value = arr[1];
-			} else document.post.body.value = document.querySelector("#article").value;
-
-			var req = new XMLHttpRequest();
-			req.onload = function(){
-				var res = JSON.parse(this.responseText);
-				_self.classList.remove("running");
-				_self.removeAttribute("disabled");
-				if(res.ok){
-					if(!document.querySelector("input[name=id]").value) {
-						document.querySelector("input[name=id]").value = res.id;
-						document.post.action="/admin/post/"+res.id;
-					}
-					alertify.success("Saved!");
-				} 
-				else alertify.error("Something went wrong =(");
-			};
-			req.open(_self.form.method, _self.form.action, true);
-			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			
-			req.send(_self.form.serialize());
-
-		};
-
-		document.querySelector("#btn-save-quit").onclick = function(e) {
-			var _self = this,
-				arr = document.querySelector("#article").value.split(/--preview--/);
-
-			_self.classList.add("running");
-
-			if(arr.length > 1){
-				document.post.preview.value = arr[0];
-				document.post.body.value = arr[1];
-			} else document.post.body.value = document.querySelector("#article").value;
-
-			var req = new XMLHttpRequest();
-			req.onload = function(){
-				var res = JSON.parse(this.responseText);
-				_self.classList.remove("running");
-				_self.removeAttribute("disabled");
-				if(res.ok) window.location.pathname = "/admin";
-				else alertify.error('Something went wrong =(');
-			};
-			req.open(_self.form.method, _self.form.action, true);
-			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			
-			req.send(_self.form.serialize());
-
-		};
 
 	</script>
 </body>

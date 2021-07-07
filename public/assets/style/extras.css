@@ -1,0 +1,10 @@
+span.spoiler,
+spoiler { 
+	color: black; 
+	background-color:black;
+}
+
+span.spoiler:hover,
+spoiler:hover{
+	color: white;
+}

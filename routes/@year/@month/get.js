@@ -1,7 +1,9 @@
 var render = require(rootDir+'/render'),
 	fecha = require('fecha');
 
-module.exports = function(req, res, next){
+module.exports = [
+
+function(req, res, next){
 	// If @year is not a number redirect to other routes
 	if(isNaN(req.params.year)) return next();
 
@@ -33,4 +35,5 @@ module.exports = function(req, res, next){
 			res.send(render.blog_index(pageData));
 
 		});
-};
+}
+];

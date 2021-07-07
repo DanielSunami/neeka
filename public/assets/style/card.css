@@ -2,7 +2,6 @@
 	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
 	display: block;
 	width: 100%;
-	background-color: #FBFBFB;
 }
 
 .card hr {
@@ -13,10 +12,10 @@
 }
 
 .card-head {
-	padding: 10px 0 10px 20px;
-	border-radius: 2px 2px 0 0;
 	text-align: center;
 	margin: 0;
+	padding: 20px 0 20px 30px;
+	border-radius: 10px 10px 0 0;
 }
 
 .card-head h4 {
@@ -29,8 +28,17 @@
 .card-body {
 	padding: 20px;
 	color: #333333;
+	border-radius: 0 0 10px 10px;
 }
 
 .card-action {
 	padding-bottom: 20px;
+}
+
+.card.dark .card-head {
+	background-color: #232736;
+}
+
+.card.dark .card-body {
+	background-color: #0C1225;
 }

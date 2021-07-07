@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="/assets/style/alertify.min.css" type="text/css" />
 <link rel="stylesheet" href="/assets/style/alertify.default.min.css" type="text/css" />
 
+<link rel="stylesheet" href="/assets/style/extras.css" type="text/css" />
 <link rel="stylesheet" href="/assets/style/font.css" type="text/css" />
 <link rel="stylesheet" href="/assets/style/default-dark.css" type="text/css" />
 <link rel="stylesheet" href="/assets/style/card.css" type="text/css" />

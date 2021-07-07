@@ -248,10 +248,14 @@ document.addEventListener('DOMContentLoaded', function () {
 			_self.setAttribute("disabled","");	
 			var req = new XMLHttpRequest();
 			req.onload = function(){
+				console.log(this);
 				var res = JSON.parse(this.responseText);
 				_self.classList.remove("running");
 				_self.removeAttribute("disabled");
-				if(res.ok) carousel.next();
+				if(res.ok) {
+					if(res.redirect) window.location.pathname = res.redirect;
+					else carousel.next();
+				}
 			};
 			req.open(_self.form.method, _self.form.action, true);
 			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
