@@ -137,6 +137,8 @@ meta.statics = {
 	 * @month - zero based, 0 = jan & 11 = dez
 	 */
 	addToYearMonth: function(year, month, done) {
+		// internally uses jan = 1 & dez = 12
+		month++;
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc) {
 			let found = false;
 
@@ -201,6 +203,8 @@ meta.statics = {
 	},
 	
 	removeFromYearMonth: function(year, month, done) {
+		// internally uses jan = 1 & dez = 12
+		month++;
 		this.findById('5a5ab903486beb7fce003a39', function(err, doc) {
 			let found = false;
 

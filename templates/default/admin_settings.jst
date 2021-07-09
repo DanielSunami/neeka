@@ -116,6 +116,10 @@
 									</div>
 								</div>
 								<div class="clearfix mt3">
+									<button id="btn-rebuild-meta" type="button" class="neeka-button sun col-right col-3 mx1 ld ld-ext-right">
+										Rebuild Metadata
+										<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
+									</button>
 									<button id="btn-reset-meta" type="button" class="neeka-button sun col-right col-3 mx1 ld ld-ext-right">
 										Reset Metadata
 										<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
@@ -202,6 +206,27 @@
 				}
 			};
 			req.open("POST", "/admin/settings/resetMeta", true);
+
+			req.send();
+		};
+
+		document.querySelector('#btn-rebuild-meta').onclick = function(){
+			var _self = this;
+	
+			_self.classList.add("running");
+			_self.setAttribute("disabled","");
+			var req = new XMLHttpRequest();
+			req.onload = function(){
+				var res = JSON.parse(this.responseText);
+				_self.classList.remove("running");
+				_self.removeAttribute("disabled");
+				if(res.ok) {
+					alertify.success("Reseted!");
+				} else {
+					alertify.error("Failed");
+				}
+			};
+			req.open("POST", "/admin/settings/rebuildMeta", true);
 
 			req.send();
 		};

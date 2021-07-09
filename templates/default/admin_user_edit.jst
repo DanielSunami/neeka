@@ -47,7 +47,7 @@
 									<div class="sm-col sm-col-6 px1">
 										<div class="form-group">
 											<label>Birthday
-											<input type="text" name="birthday" value="{{=fecha.format(it.user.birthday, 'regular')}}"/></label>
+											<input type="text" name="birthday" {{? it.user.birthday }}value="{{=fecha.format(it.user.birthday, 'regular')}}" {{?}}/></label>
 											<small>day-month-year - 21/01/1990 </small>
 										</div>
 									</div>
