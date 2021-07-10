@@ -24,6 +24,7 @@ function(req, res){
 	model.post
 	  .find()
 	  .select('_id title published author created_on last_update')
+	  .sort('-created_on')
 	  .populate({ path: 'author', select: 'firstname lastname' })
 	  .lean()
 	  .exec(function(err, posts) {
