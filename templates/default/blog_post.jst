@@ -9,18 +9,17 @@
 	<link rel="dns-prefetch" href="//www.google-analytics.com" />
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="{{=it.site.description}}">
-	<meta name="keywords" content="{{=it.site.description}}">
+	<meta name="description" content="{{=it.post.description}}">
+	<meta name="keywords" content="{{=it.post.keywords}}">
 	<meta name="robots" content="index,follow">
 
 	<!-- Open Graph Protocol -->
 	<meta property="og:locale" content>
 	<meta property="og:type" content>
-	<meta property="og:title" content="{{=it.site.name}}">
+	<meta property="og:title" content="{{=it.post.title}}">
 	<meta property="og:description" content="{{=it.site.description}}">
 	<meta property="og:site_name" content="{{=it.site.name}}">
 	<meta property="og:url" content="//{{=it.site.url}}">
-	<meta property="og:title" content="{{=it.site.name}}">
 
 	<meta property="og:image" content>
 	<meta property="og:image:secure_url" content>
@@ -30,8 +29,8 @@
 	<meta itemprop="name" content="{{=it.site.name}}">
 
 	<!-- Twitter -->
-	<meta name="twitter:description" content="{{=it.site.description}}">
-	<meta name="twitter:title" content="{{=it.site.name}}">
+	<meta name="twitter:description" content="{{=it.post.description}}">
+	<meta name="twitter:title" content="{{=it.post.title}}">
 	<meta name="twitter:site" content><!-- @user -->
 	<meta name="twitter:image" content>
 
@@ -62,11 +61,11 @@
 	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
 	ga('create', '{{=it.site.gaUID}}', 'auto');
-	ga('send', 'pageview');
 	ga('set', {
-		page: '{{=it.site.path}}',
+		page: '{{=it.site.url}}',
 		title: '{{=it.title}}'
 	});
+	ga('send', 'pageview');
 	</script>
 	<!-- End Google Analytics -->
 </head>

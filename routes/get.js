@@ -9,11 +9,12 @@ function(req, res, next) {
 
 function(req, res, next) {
 
+	let title = "Home" + req.query.page > 1 ? " - Page " + req.query.page : "";
 	req.query.itens = req.query.itens || 5;
 	req.query.page = --req.query.page || 0;
 	
 	req.pageData = {
-		title:"Home",
+		title: title,
 		site: {
 			name: NEEKA.name,
 			url: NEEKA.url,

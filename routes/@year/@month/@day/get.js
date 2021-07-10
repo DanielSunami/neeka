@@ -16,7 +16,7 @@ module.exports = function(req, res, next){
 			url: NEEKA.url,
 			description: NEEKA.description,
 			keywords: NEEKA.keywords,
-			gaUID: NEEKA.google_analytics
+			gaUID: NEEKA.gaUID
 		},
 		url: NEEKA.url+"/"+req.params.year+"/"+req.params.month+"/"+req.params.day,
 		page: req.query.page //zero-based

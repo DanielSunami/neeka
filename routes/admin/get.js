@@ -10,7 +10,7 @@ module.exports = function(req, res){
 			url: NEEKA.url,
 			description: NEEKA.description,
 			keywords: NEEKA.keywords,
-			gaUID: NEEKA.google_analytics,
+			gaUID: NEEKA.gaUID,
 			template: NEEKA.template
 		},
 		url: NEEKA.url+"/"+req.params.year
