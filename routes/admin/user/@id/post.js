@@ -19,13 +19,16 @@ utils.bodyTrim,
 
 // Validate req.body.birthday
 function(req, res, next) {
+
+	if(!req.body.birthday) return next();
+
 	let toDate = fecha.parse(req.body.birthday, 'regular');
 	if(!toDate) {
 		res.status(400).json({ ok: false, msg: 'Invalid Date Format' });
 		return;
 	} else {
 		req.body.birthday = toDate;
-		next();
+		return next();
 	}
 },
 
