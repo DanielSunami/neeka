@@ -11,10 +11,9 @@ module.exports = function(req, res, next){
 			url: NEEKA.url,
 			description: NEEKA.description,
 			keywords: NEEKA.keywords,
-			gaUID: NEEKA.gaUID,
-			path: req.path
+			gaUID: NEEKA.gaUID
 		},
-		url: NEEKA.url+"/"+req.params.year+"/"+req.params.month+"/"+req.params.day+"/"+req.params.slug,
+		url: "/"+req.params.year+"/"+req.params.month+"/"+req.params.day+"/"+req.params.slug,
 	};
 
 

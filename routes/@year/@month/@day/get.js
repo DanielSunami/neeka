@@ -5,12 +5,14 @@ module.exports = function(req, res, next){
 	// If @year is not a number redirect to other routes
 	if(isNaN(req.params.year)) return next();
 
+	let title = fecha.format(new Date(req.params.year, req.params.month, 1), 'DD MMMM, YYYY') + (req.query.page > 1 ? " - Page " + req.query.page : "");
+	let url = "/" + req.params.year + "/" + req.params.month + "/" + req.params.day + (req.query.page > 1 ? "?page=" + req.query.page : "");
+
 	req.query.itens = req.query.itens || 5;
 	req.query.page = --req.query.page || 0;
 	
 	var pageData = {
 		title: fecha.format(new Date(req.params.year, req.params.month, req.params.day), 'DD MMMM, YYYY'),
-		subtitle: "",
 		site: {
 			name: NEEKA.name,
 			url: NEEKA.url,
@@ -18,7 +20,7 @@ module.exports = function(req, res, next){
 			keywords: NEEKA.keywords,
 			gaUID: NEEKA.gaUID
 		},
-		url: NEEKA.url+"/"+req.params.year+"/"+req.params.month+"/"+req.params.day,
+		url: "/"+req.params.year+"/"+req.params.month+"/"+req.params.day,
 		page: req.query.page //zero-based
 	};
 

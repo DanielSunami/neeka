@@ -16,11 +16,14 @@ function(req, res, next) {
 	// If @year is not a number redirect to other routes
 	if(isNaN(req.params.year)) return next();
 
+	let title = req.params.year + (req.query.page > 1 ? " - Page " + req.query.page : "");
+	let url = "/" + req.params.year + (req.query.page > 1 ? "?page=" + req.query.page : "");
+
 	req.query.itens = req.query.itens || 5;
 	req.query.page = --req.query.page || 0;
 	
 	req.pageData = {
-		title: req.params.year,
+		title: title,
 		subtitle: "",
 		site: {
 			name: NEEKA.name,
@@ -29,7 +32,7 @@ function(req, res, next) {
 			keywords: NEEKA.keywords,
 			gaUID: NEEKA.gaUID
 		},
-		url: NEEKA.url+"/"+req.params.year,
+		url: "/" + req.params.year,
 		page: req.query.page //zero-based
 	};
 

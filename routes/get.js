@@ -9,7 +9,9 @@ function(req, res, next) {
 
 function(req, res, next) {
 
-	let title = "Home" + req.query.page > 1 ? " - Page " + req.query.page : "";
+	let title = "Home" + (req.query.page > 1 ? " - Page " + req.query.page : "");
+	let url = "/" + (req.query.page > 1 ? "?page=" + req.query.page : "");
+
 	req.query.itens = req.query.itens || 5;
 	req.query.page = --req.query.page || 0;
 	
@@ -22,6 +24,7 @@ function(req, res, next) {
 			keywords: NEEKA.keywords,
 			gaUID: NEEKA.gaUID
 		},
+		url: url,
 		page: req.query.page //zero-based
 	};
 

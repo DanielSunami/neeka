@@ -18,14 +18,13 @@
 	<meta property="og:title" content="{{=it.title}}">
 	<meta property="og:description" content="{{=it.site.description}}">
 	<meta property="og:site_name" content="{{=it.site.name}}">
-	<meta property="og:url" content="//{{=it.site.url}}">
-	<meta property="og:title" content="{{=it.title}}">
+	<meta property="og:url" content="{{=it.url}}">
 
 	<meta property="og:image" content>
 	<meta property="og:image:secure_url" content>
 
 	<!-- Google+ Snippets -->
-	<meta itemprop="url" content="//{{=it.site.url}}">
+	<meta itemprop="url" content="{{=it.url}}">
 	<meta itemprop="name" content="{{=it.site.name}}">
 
 	<!-- Twitter -->
@@ -64,7 +63,7 @@
 
 	ga('create', '{{=it.site.gaUID}}', 'auto');
 	ga('set', {
-		page: '{{=it.site.url}}',
+		page: '{{=it.url}}',
 		title: '{{=it.title}}'
 	});
 	ga('send', 'pageview');
