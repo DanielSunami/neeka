@@ -7,7 +7,7 @@
 .post-date {
 	text-align: center;
 	font-weight: 300;
-	margin: 1em 0 2em 0;
+	margin: 1em 0 0.8em 0;
 }
 
 .post {
@@ -24,6 +24,40 @@
 	border-bottom: 1px solid #DEDEDE;
 	width: 35%;
 	margin: 7em auto;
+}
+
+.post-social {
+	display: flex;
+	justify-content: space-evenly;
+	margin: 0 auto 2em auto;
+	max-width: 177px;
+	min-width: 155px;
+}
+
+
+.post-social .social-icon {
+	height: 30px;
+	width: 30px;
+	border-radius: 20px;
+	transition: background-color 200ms linear;
+}
+
+.post-social .social-icon:hover {
+	background-color: #d0d0d0;
+}
+
+.post-social button {
+	background: none;
+	border: 0;
+	height: 100%;
+	cursor: pointer;
+}
+
+.post-social img {
+	height: 20px;
+	width: 20px;
+	margin-top: 5px;
+	margin-left: 5px;
 }
 
 a.monstra-blog-tag {
