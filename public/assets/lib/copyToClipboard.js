@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		document.execCommand("copy");
 		document.body.removeChild(textArea);
-		alert("Copied!");
+		alertify.success('Copied!', 3)
 	}
 
 	[].map.call(document.querySelectorAll("button.copy-to-clipboard"), function(button){

@@ -2,7 +2,7 @@
 {{~it.posts :post:index}}
 	<div class="post-container">
 		{{ var url = '/' + fecha.format(post.created_on, 'url') + '/' + post.slug; }}
-		<h2 class="post-title"><a href="{{=url}}">{{=post.title}}</a></h3>
+		<h2 class="post-title"><a href="{{=url}}">{{=post.title}}</a></h2>
 		<div class="post-date"><small>{{=fecha.format(post.created_on, 'brazilian')}} | <a href="{{=post.author.website}}">{{=post.author.fullName}}</a></small></div>
 		<div class="post-social">
 			{{ var encodedURL = encodeURIComponent('https://' + it.site.url + url); }}
