@@ -82,8 +82,11 @@
 				<div class="post-date"><small>{{=fecha.format(it.post.created_on, 'brazilian')}} | <a href="{{=it.post.author.website}}">{{=it.post.author.fullName}}</a></small></div>
 				<div class="post-social">
 					{{ var encodedURL = encodeURIComponent('https://' + it.site.url + it.url); }}
-					<div class="social-icon">
+					<div class="social-icon display-none">
 						<button type="button" class="copy-to-clipboard" data-content="{{='https://' + it.site.url + it.url}}"><img src="/assets/img/clip-icon.svg" style="margin-top: 4px; margin-left: 0"/></button>
+					</div>
+					<div class="social-icon display-none">
+						<button type="button" class="native-share" data-url="{{='https://' + it.site.url + it.url}}" data-title="{{=it.post.title}}"><img src="/assets/img/share-icon.svg" style="margin-top: 4px; margin-left: -2px"/></button>
 					</div>
 					<div class="social-icon">
 						<a href="whatsapp://send?text={{=encodedURL}}" target="_blank"><img src="/assets/img/whatsapp-icon.svg"/></a>
@@ -93,9 +96,6 @@
 					</div>
 					<div class="social-icon">
 						<a href="https://t.me/share/url?url={{=encodedURL}}" target="_blank"><img src="/assets/img/telegram-icon.svg" style="margin-left: 3px"/></a>
-					</div>
-					<div class="social-icon display-none">
-						<button type="button" class="native-share" data-url="{{='https://' + it.site.url + it.url}}" data-title="{{=it.post.title}}"><img src="/assets/img/share-icon.svg" style="margin-top: 4px; margin-left: -2px"/></button>
 					</div>
 				</div>
 				<div class="post">
