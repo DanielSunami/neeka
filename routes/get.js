@@ -45,7 +45,6 @@ function(req, res) {
 	  .find()
 	  .published()
 	  .exec(function(err, meta){
-	  	console.log(meta);
 		req.pageData.totalNumberOfPages = Math.ceil(meta.published/req.query.itens);
 		
 		res.send(req.render(req.pageData));
