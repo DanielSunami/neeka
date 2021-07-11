@@ -130,20 +130,46 @@
 					this.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/ /g,"-");
 			};
 
+			document.querySelector('#article').onchange = function(e){
+				if(document.post.description.value) return;
+
+				var htmlObject = document.createElement('div');
+				htmlObject.innerHTML = document.querySelector('#article').value;
+
+				document.post.description.value = htmlObject.innerText.substr(0, 170).replace(/--preview--/, '');
+			};
+
 			[].map.call(document.querySelectorAll("form input"), function(input){
 				input.onkeypress = function(e) {if ( e.which == 13 ) e.preventDefault();}
 			});
 
+			function setArticleSafeHTML() {
+				var rawArticle = document.querySelector("#article").value;
+				{{? it.user.preferences.editor == 'trix' }}
+					/* remove div tag */
+					rawArticle = rawArticle.substring(5, rawArticle.length-6);
+				{{?}}
+				var arr = rawArticle.split(/--preview--/);
+				var htmlObject = document.createElement('div');
+
+				if(arr.length > 1) {
+					htmlObject.innerHTML = arr[0];
+					document.post.preview.value = htmlObject.innerHTML;
+					htmlObject.innerHTML = arr[1];
+					document.post.body.value = htmlObject.innerHTML;
+				} else {
+					htmlObject.innerHTML = arr[0];
+					document.post.body.value = htmlObject.innerHTML;
+				}
+			}
+
+
 			document.querySelector("#btn-save").onclick = function(e) {
-				var _self = this,
-					arr = document.querySelector("#article").value.split(/--preview--/);
+				var _self = this;
 
 				_self.classList.add("running");
 
-				if(arr.length > 1){
-					document.post.preview.value = arr[0];
-					document.post.body.value = arr[1];
-				} else document.post.body.value = document.querySelector("#article").value;
+				setArticleSafeHTML();
 
 				var req = new XMLHttpRequest();
 				req.onload = function(){
@@ -167,15 +193,11 @@
 			};
 
 			document.querySelector("#btn-save-quit").onclick = function(e) {
-				var _self = this,
-					arr = document.querySelector("#article").value.split(/--preview--/);
+				var _self = this;
 
 				_self.classList.add("running");
 
-				if(arr.length > 1){
-					document.post.preview.value = arr[0];
-					document.post.body.value = arr[1];
-				} else document.post.body.value = document.querySelector("#article").value;
+				setArticleSafeHTML();
 
 				var req = new XMLHttpRequest();
 				req.onload = function(){
@@ -212,6 +234,7 @@
 			};
 			{{?}}
 
+			{{? it.user.preferences.editor == 'raw' }}
 			document.querySelector(".neeka-raw-editor-toolbar .toolbar-code").onclick = function(e) {
 				alertify.prompt()
 				  .setContent("<input class='awesomplete' data-list='#lang-list' />")
@@ -227,6 +250,7 @@
 			document.querySelector(".neeka-raw-editor-toolbar .toolbar-spoiler").onclick = function(e) {
 				document.querySelector("#article").value += "<spoiler></spoiler>";
 			};
+			{{?}}
 		});
 
 	</script>
