@@ -11,9 +11,5 @@ document.addEventListener('DOMContentLoaded', function () {
 				})
 			}
 		});
-	} else {
-		[].map.call(document.querySelectorAll('button.copy-to-clipboard'), function(button) {
-			button.parentElement.classList.remove('display-none');
-		});
-	}
+	} 
 });
