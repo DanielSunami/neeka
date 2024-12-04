@@ -23,7 +23,7 @@
     "fecha": "^2.3.1",
     "mongoose": "^5.12.2",
     "multer": "^1.0.5",
-    "nodemailer": "^4.4.1",
+    "nodemailer": "^6.4.16",
     "passgenn": "^0.1.1"
   },
   "author": "Daniel Sunami <danielsunami@akafrx.com> (http://akafrx.com)",
