@@ -1,4 +1,6 @@
 const utils = require(rootDir+'/lib/utils');
+const sqlite = require(rootDir+'/lib/sqlite');
+const { shapePost } = require(rootDir+'/lib/pageData');
 
 module.exports = [
 
@@ -8,36 +10,24 @@ function(req, res, next) {
 },
 
 function(req, res){
-	
-	const pageData = {
-		title: "Administration",
-		subtitle: "",
-		site: {
-			name: NEEKA.name,
-			url: NEEKA.url,
-			description: NEEKA.description,
-			keywords: NEEKA.keywords
-		},
-		posts: []
-	};
+	const db = sqlite.open();
+	req.pageData.title = "Administration";
+	req.pageData.subtitle = "";
+	req.pageData.posts = [];
 
-	model.post
-	  .find()
-	  .select('_id title published author created_on last_update')
-	  .sort('-created_on')
-	  .populate({ path: 'author', select: 'firstname lastname' })
-	  .lean()
-	  .exec(function(err, posts) {
-		if(err) {
-			console.log(err);
-			// append error to pageData
-			res.send(req.render(pageData));
-		} else {
-			pageData.posts = posts;
+	try {
+		const rows = db.prepare(`
+			SELECT p.id, p.title, p.published, p.author_id, p.created_on, p.last_update,
+				u.firstname AS author_firstname, u.lastname AS author_lastname
+			FROM posts p
+			JOIN users u ON u.id = p.author_id
+			ORDER BY p.created_on DESC
+		`).all();
+		req.pageData.posts = rows.map(shapePost);
+	} catch (err) {
+		console.log(err);
+	}
 
-			res.send(req.render(pageData));
-		}
-	})
-
+	res.send(req.render(req.pageData));
 }
 ];

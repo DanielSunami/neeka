@@ -1,11 +1,9 @@
 'use strict';
 
 global.rootDir = __dirname+'/..';
-global.mongoUri = "";
-global.zeroLeftMask = function (number, size) {
-  number = number.toString();
-  for(; size - number.length > 0;) number = "0" + number;
-  return number;
+global.zeroLeftMask = function (n) {
+  n = parseInt(n, 10);
+  return (n < 10 ? '0' : '') + n;
 }
 global.NEEKA = {};
 global.mailer = {};
@@ -14,8 +12,9 @@ Date.prototype.toString = function (){return (this.getMonth()+1)+"-"+this.getDat
 Date.prototype.toJSON = function (){return (this.getMonth()+1)+"-"+this.getDate()+"-"+this.getFullYear()}
 
 require('../lib/setupFecha.js');
+require('../lib/permissions.js');
 //require('../lib/checkUpdate.js');
-var http = require('http'),
+let http = require('http'),
 	app = require('../lib/app.js'),
 	test = require('tape'),
 	tapSpec = require('tap-spec'),
@@ -50,7 +49,7 @@ test('Testing /install', function (t) {
 test('Testing install first step', function (t) {
 	request(app)
 		.post('/install/1')
-		.send({ hostname: '127.0.0.1', port: '27017', dbname: 'neeka'})
+		.send({ firstname: 'Daniel', email: 'danielsunami@gmail.com', password: '123'})
 		.expect(200)
 		.end(function (err, res) {
 			t.error(err, 'No error');
@@ -59,10 +58,10 @@ test('Testing install first step', function (t) {
 		});
 });
 
-test('Testing install first step', function (t) {
+test('Testing install second step', function (t) {
 	request(app)
 		.post('/install/2')
-		.send({ firstname: 'Daniel', email: 'danielsunami@gmail.com', password: '123'})
+		.send({})
 		.expect(200)
 		.end(function (err, res) {
 			t.error(err, 'No error');
@@ -71,10 +70,10 @@ test('Testing install first step', function (t) {
 		});
 });
 
-test('Testing install first step', function (t) {
+test('Testing install third step', function (t) {
 	request(app)
 		.post('/install/3')
-		.send({})
+		.send({name: 'Akafrx', url: '127.0.0.1'})
 		.expect(200)
 		.end(function (err, res) {
 			t.error(err, 'No error');
@@ -83,19 +82,7 @@ test('Testing install first step', function (t) {
 		});
 });
 
-test('Testing install first step', function (t) {
-	request(app)
-		.post('/install/4')
-		.send({name: 'Akafrx', url: '127.0.0.1'})
-		.expect(302)
-		.expect('location',/\//)
-		.end(function (err, res) {
-			t.error(err, 'Fourth step');
-			t.end();
-		});
-});
-
 test('Closing db connection', function (t) {
-	require('mongoose').disconnect();
+	require('../lib/sqlite').close();
 	t.end();
 });

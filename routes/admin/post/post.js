@@ -1,35 +1,57 @@
+const sqlite = require(rootDir+'/lib/sqlite');
+
+function tagNames(body) {
+	let t = body.tag;
+	if (t == null) t = body.tags;
+	if (t == null || t === '') return [];
+	if (!Array.isArray(t)) t = [t];
+	return t.map(function(s) { return String(s).trim().toLowerCase(); }).filter(Boolean);
+}
+
+function saveTags(db, postId, names) {
+	db.prepare(`DELETE FROM post_tags WHERE post_id = ?`).run(postId);
+	const now = sqlite.now();
+	const insertTag = db.prepare(`INSERT OR IGNORE INTO tags (name, created_on) VALUES (?, ?)`);
+	const getTag = db.prepare(`SELECT id FROM tags WHERE name = ?`);
+	const link = db.prepare(`INSERT OR IGNORE INTO post_tags (post_id, tag_id) VALUES (?, ?)`);
+	names.forEach(function(name) {
+		insertTag.run(name, now);
+		const tag = getTag.get(name);
+		if (tag) link.run(postId, tag.id);
+	});
+}
+
 module.exports = [
-function(req, res, next) {
-
-	req.body.author = req.session.user.id;
-
-	new model.post(req.body).save(function(err, newPost){
-		if(err) {
-			console.log('[MongoDBError] POST /admin/post - ', err);
-			res.json({ok: false});
-		} else {
-			req.newPost = newPost;
-			next();
-		}
-	})
-
-},
-function(req, res, next) {
-	if(req.newPost.published)
-		model.meta_posts.addToPublished(next);
-	else
-		model.meta_posts.addToDraft(next);
-},
-function(req, res, next) {
-	model.meta_posts.addToYear(req.newPost.created_on.getFullYear(), next);
-},
-function(req, res, next) {
-	model.meta_posts.addToYearMonth(req.newPost.created_on.getFullYear(), req.newPost.created_on.getMonth(), next);
-},
-function(req, res, next) {
-	model.meta_posts.addToAuthor(req.newPost.author.toString(), next);
-},
 function(req, res) {
-	res.json({ ok: true, id: req.newPost._id });
+	const db = sqlite.open();
+	const now = sqlite.now();
+	const published = req.body.published == 'true' ? 1 : 0;
+
+	try {
+		const info = db.transaction(function() {
+			const result = db.prepare(`
+				INSERT INTO posts (title, slug, preview, body, author_id, published, keywords, description, created_on, last_update)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			`).run(
+				req.body.title,
+				req.body.slug,
+				req.body.preview,
+				req.body.body,
+				req.session.user.id,
+				published,
+				req.body.keywords || '',
+				req.body.description || '',
+				now,
+				now
+			);
+			saveTags(db, result.lastInsertRowid, tagNames(req.body));
+			return result;
+		})();
+
+		res.json({ ok: true, id: info.lastInsertRowid });
+	} catch (err) {
+		console.log('[SQLiteError] POST /admin/post - ', err);
+		res.json({ok: false});
+	}
 }
 ];

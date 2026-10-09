@@ -1,26 +1,17 @@
-var render = require(rootDir+'/render');
+let render = require(rootDir+'/render');
+const sqlite = require(rootDir+'/lib/sqlite');
 
 module.exports = function(req, res){
+	const db = sqlite.open();
+	req.pageData.title = "Recuperar Senha";
+	req.pageData.subtitle = "Recuperar Senha";
+	req.pageData.id = req.params.id;
 
-	var pageData = {
-		title:"Recuperar Senha",
-		subtitle:"Recuperar Senha",
-		site: {
-			name: NEEKA.name,
-			url: NEEKA.url,
-			description: NEEKA.description,
-			keywords: NEEKA.keywords
-		},
-		id: req.params.id
-	};
+	const doc = db.prepare(`
+		SELECT id FROM forgots
+		WHERE id = ? AND datetime(created_on) > datetime('now', '-48 hours')
+	`).get(req.params.id);
 
-	model.forgot
-		.find()
-		.getUser(req.params.id)
-		.exec(function(err,doc){
-			pageData.found = doc ? true : false;
-			
-			res.send(render.password_recovery(pageData));
-		});
-
+	req.pageData.found = !!doc;
+	res.send(render.password_recovery(req.pageData));
 };

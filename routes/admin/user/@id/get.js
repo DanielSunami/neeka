@@ -1,23 +1,17 @@
-var render = require(rootDir+'/render');
+let render = require(rootDir+'/render');
+const sqlite = require(rootDir+'/lib/sqlite');
+const { shapeUser } = require(rootDir+'/lib/pageData');
 
 module.exports = function(req, res){
-	
-	var pageData = {
-		title: "Administration",
-		subtitle: "",
-		site: {
-			name: NEEKA.name,
-			url: NEEKA.url,
-			description: NEEKA.description,
-			keywords: NEEKA.keywords
-		}
-	};
+	const db = sqlite.open();
+	req.pageData.title = "Administration";
+	req.pageData.subtitle = "";
 
-	model.user
-		.findById(req.params.id)
-		.exec(function(err,doc){
-			pageData.user = doc;
+	const row = db.prepare(`
+		SELECT id, firstname, lastname, website, email, birthday, permissions, editor, created_on, last_update
+		FROM users WHERE id = ?
+	`).get(req.params.id);
 
-			res.send(render.admin_user_edit(pageData));
-		});
+	req.pageData.user = shapeUser(row);
+	res.send(render.admin_user_edit(req.pageData));
 };

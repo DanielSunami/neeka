@@ -1,20 +1,15 @@
-const utils = require(rootDir+'/lib/utils');
+const sqlite = require(rootDir+'/lib/sqlite');
 
 module.exports = [
 
 function(req, res, next) {
-
-	model.post
-	  .findByIdAndDelete(req.params.id)
-	  .exec(function(err, post) {
-		if(err){
-			res.json({ ok: false });
-		} else {
-
-			res.json({ ok: true });
-		}
-	});
+	const db = sqlite.open();
+	try {
+		db.prepare(`DELETE FROM posts WHERE id = ?`).run(req.params.id);
+		res.json({ ok: true });
+	} catch (err) {
+		res.json({ ok: false });
+	}
 }
 
-// TO-DO Update metas
 ];

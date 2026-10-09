@@ -1,27 +1,19 @@
-var render = require(rootDir+'/render');
+let render = require(rootDir+'/render');
+const sqlite = require(rootDir+'/lib/sqlite');
+const { shapeUser } = require(rootDir+'/lib/pageData');
 
 module.exports = function(req, res){
-	
-	var pageData = {
-		title: "Administration",
-		subtitle: "",
-		site: {
-			name: NEEKA.name,
-			url: NEEKA.url,
-			description: NEEKA.description,
-			keywords: NEEKA.keywords
-		}
-	};
+	const db = sqlite.open();
+	req.pageData.title = "Administration";
+	req.pageData.subtitle = "";
 
-	model.user
-		.find()
-		.select('-password')
-		.sort({'created_on':1})
-		.limit(10)
-		.exec(function(err,docs){
-			pageData.users = docs;
+	const rows = db.prepare(`
+		SELECT id, firstname, lastname, website, email, birthday, permissions, editor, created_on, last_update
+		FROM users
+		ORDER BY created_on ASC
+		LIMIT 10
+	`).all();
 
-			res.send(render.admin_user(pageData));
-
-		});
+	req.pageData.users = rows.map(shapeUser);
+	res.send(render.admin_user(req.pageData));
 };

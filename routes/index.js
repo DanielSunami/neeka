@@ -1,11 +1,11 @@
-var path = require('path'),
+let path = require('path'),
 	log = '',
 	fs = require('fs'),
 	util = require('util'),
 	router = require('express').Router();
 
 function req(method, path, file) {
-	var handler = require(file);
+	let handler = require(file);
 	path = path.replace(/@/g,':');
 	log += util.format('Mapping %s %s to %s \n', method.toUpperCase(), path.substring(__dirname.length, path.length), file);
 	router[method](path.substring(__dirname.length, path.length), handler);
@@ -18,14 +18,14 @@ function treeWalker(dirs, parent){
 		else return 0;
 	});
 	dirs.forEach(function(file) {
-		var stats = fs.statSync(parent + '/' + file);
+		let stats = fs.statSync(parent + '/' + file);
 		if (!stats.isFile()) {
 			treeWalker(fs.readdirSync(parent + '/' + file), parent + '/' + file);
 		}
 		else {
-			var ext = path.extname(parent + '/' + file);
+			let ext = path.extname(parent + '/' + file);
 			if ( !(ext in require.extensions) ) { return; }
-			var method = path.basename(parent + '/' + file, '.js');
+			let method = path.basename(parent + '/' + file, '.js');
 			if(method != 'index') req(method, parent+'/', parent + '/' + file);
 			return;
 		}

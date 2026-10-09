@@ -19,7 +19,7 @@
 							<div class="sm-col sm-col-2 cell">Last Update</div>
 						</div>
 						<!-- rows -->
-						{{var fecha =  require('fecha');}}
+						{{let fecha =  require('fecha');}}
 						{{~it.posts :post:index}}
 						<div class="clearfix table-row">
 							<div class="sm-col cell" style="width: 48%;"><a href="/admin/post/{{=post._id}}">{{=post.title}}</a></div>

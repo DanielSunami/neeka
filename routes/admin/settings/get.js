@@ -14,21 +14,11 @@ function(req, res) {
 	Object.assign(obj, NEEKA);
 	delete obj.smtp_pass;
 
-	let pageData = {
-		title: "Administration",
-		subtitle: "",
-		site: {
-			name: NEEKA.name,
-			url: NEEKA.url,
-			description: NEEKA.description,
-			keywords: NEEKA.keywords,
-			gaUID: NEEKA.gaUID,
-			template: NEEKA.template
-		},
-		url: NEEKA.url+"/admin/settings",
-		NEEKA: obj
-	};
+	req.pageData.title = "Administration";
+	req.pageData.subtitle = "";
+	req.pageData.url = NEEKA.url+"/admin/settings";
+	req.pageData.NEEKA = obj;
 
-	res.send(req.render(pageData));
+	res.send(req.render(req.pageData));
 }
 ];

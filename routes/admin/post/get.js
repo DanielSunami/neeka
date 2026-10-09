@@ -1,4 +1,6 @@
 const utils = require(rootDir+'/lib/utils');
+const sqlite = require(rootDir+'/lib/sqlite');
+const { shapeUser } = require(rootDir+'/lib/pageData');
 
 module.exports = [
 
@@ -7,43 +9,24 @@ function(req, res, next) {
 	next();
 },
 
-function(req, res, next) {
-	req.data = {};
-
-	model.user
-	  .findById(req.session.user.id)
-	  .select('preferences')
-	  .lean()
-	  .exec(function(err, user) {
-		req.data.user = user;
-		next();
-	});
-},
-
 function(req, res) {
-	
-	const pageData = {
-		title: "Administration",
-		subtitle: "",
-		site: {
-			name: NEEKA.name,
-			url: NEEKA.url,
-			description: NEEKA.description,
-			keywords: NEEKA.keywords
-		},
-		post: {
-			_id: "",
-			title: "",
-			slug: "",
-			preview: "",
-			body: "",
-			published: true,
-			keywords: "",
-			description: ""
-		},
-		user: req.data.user
-	};
+	const db = sqlite.open();
+	const user = shapeUser(db.prepare(`SELECT id, editor FROM users WHERE id = ?`).get(req.session.user.id));
 
-	res.send(req.render(pageData));
+	req.pageData.title = "Administration";
+	req.pageData.subtitle = "";
+	req.pageData.post = {
+		_id: "",
+		title: "",
+		slug: "",
+		preview: "",
+		body: "",
+		published: true,
+		keywords: "",
+		description: ""
+	};
+	req.pageData.user = user || { preferences: { editor: 'trix' } };
+
+	res.send(req.render(req.pageData));
 }
 ];

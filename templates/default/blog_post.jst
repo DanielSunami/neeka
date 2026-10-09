@@ -1,4 +1,4 @@
-{{var fecha =  require('fecha');}}
+{{let fecha =  require('fecha');}}
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,7 +83,7 @@
 				<h1 class="post-title"><a href="{{=it.url}}">{{=it.post.title}}</a></h3>
 				<div class="post-date"><small>{{=fecha.format(it.post.created_on, 'brazilian')}} | <a href="{{=it.post.author.website}}">{{=it.post.author.fullName}}</a></small></div>
 				<div class="post-social">
-					{{ var encodedURL = encodeURIComponent('https://' + it.site.url + it.url); }}
+					{{ let encodedURL = encodeURIComponent('https://' + it.site.url + it.url); }}
 					<div class="social-icon">
 						<button type="button" class="copy-to-clipboard" data-content="{{='https://' + it.site.url + it.url}}"><img src="/assets/img/clip-icon.svg" style="margin-top: 4px; margin-left: 0"/></button>
 					</div>

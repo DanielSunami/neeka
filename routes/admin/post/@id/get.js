@@ -1,4 +1,6 @@
 const utils = require(rootDir+'/lib/utils');
+const sqlite = require(rootDir+'/lib/sqlite');
+const { shapePost, shapeUser } = require(rootDir+'/lib/pageData');
 
 module.exports = [
 
@@ -7,46 +9,30 @@ function(req, res, next) {
 	next();
 },
 
-// fetch auth user preferences, NOT author preferences
-function(req, res, next) {
-	req.data = {};
-
-	model.user
-	  .findById(req.session.user.id)
-	  .select('preferences')
-	  .lean()
-	  .exec(function(err, user) {
-		req.data.user = user;
-		next();
-	});
-},
-
 function(req, res) {
+	const db = sqlite.open();
+	const user = shapeUser(db.prepare(`SELECT id, editor FROM users WHERE id = ?`).get(req.session.user.id));
 
-	let pageData = {
-		title: "Administration",
-		subtitle: "",
-		site: {
-			name: NEEKA.name,
-			url: NEEKA.url,
-			description: NEEKA.description,
-			keywords: NEEKA.keywords
-		},
-		post: {},
-		user: req.data.user
-	};
+	req.pageData.title = "Administration";
+	req.pageData.subtitle = "";
+	req.pageData.post = {};
+	req.pageData.user = user || { preferences: { editor: 'trix' } };
 
-	model.post
-	  .findById(req.params.id)
-	  .populate({ path: 'author', select: 'preferences' })
-	  .lean()
-	  .exec(function(err, post) {
-		if(!post){
-			res.redirect('/admin/posts');
-		} else {
-			pageData.post = post;
-			res.send(req.render(pageData));
-		}
-	});
+	const row = db.prepare(`
+		SELECT p.id, p.title, p.slug, p.preview, p.body, p.author_id, p.published,
+			p.keywords, p.description, p.created_on, p.last_update,
+			u.firstname AS author_firstname, u.lastname AS author_lastname,
+			u.website AS author_website, u.editor AS author_editor
+		FROM posts p
+		JOIN users u ON u.id = p.author_id
+		WHERE p.id = ?
+	`).get(req.params.id);
+
+	if(!row){
+		res.redirect('/admin/posts');
+	} else {
+		req.pageData.post = shapePost(row);
+		res.send(req.render(req.pageData));
+	}
 }
 ];

@@ -1,42 +1,50 @@
 let render = require(rootDir+'/render'),
 	fecha = require('fecha');
+const pagination = require(rootDir+'/lib/pagination');
+const sqlite = require(rootDir+'/lib/sqlite');
+const { shapePost } = require(rootDir+'/lib/pageData');
 
 module.exports = [
 
 function(req, res, next){
-	// If @year is not a number redirect to other routes
+	if(isNaN(req.params.year)) return next();
+	pagination(req, res, next);
+},
+
+function(req, res, next){
 	if(isNaN(req.params.year)) return next();
 
-	let title = fecha.format(new Date(req.params.year, req.params.month, 1), 'MMMM, YYYY') + (req.query.page > 1 ? " - Page " + req.query.page : "");
-	let url = "/" + req.params.year + "/" + req.params.month + (req.query.page > 1 ? "?page=" + req.query.page : "");
+	const db = sqlite.open();
+	const year = String(req.params.year);
+	const month = zeroLeftMask(req.params.month);
+	const title = fecha.format(new Date(req.params.year, req.params.month - 1, 1), 'MMMM, YYYY') + (req.query.page > 1 ? " - Page " + req.query.page : "");
+	const url = "/" + year + "/" + month + (req.query.page > 1 ? "?page=" + req.query.page : "");
 
-	req.query.itens = req.query.itens || 5;
-	req.query.page = --req.query.page || 0;
-	
-	let pageData = {
-		title: title,
-		subtitle: "",
-		site: {
-			name: NEEKA.name,
-			url: NEEKA.url,
-			description: NEEKA.description,
-			keywords: NEEKA.keywords,
-			gaUID: NEEKA.gaUID
-		},
-		url: url,
-		page: req.query.page //zero-based
-	};
+	req.pageData.title = title;
+	req.pageData.subtitle = "";
+	req.pageData.url = url;
+	req.pageData.page = req.page;
 
-	model.post
-		.find()
-		.publishedByYearMonth(req.params.year, req.params.month, req.query.page, req.query.itens)
-		.sort({'created_on':-1})
-		.populate('author')
-		.exec(function(err,docs){
+	const yearMonth = year + '-' + month;
 
-			pageData.posts = docs;
-			res.send(render.blog_index(pageData));
+	const rows = db.prepare(`
+		SELECT p.id, p.title, p.slug, p.preview, p.body, p.author_id, p.published,
+			p.keywords, p.description, p.created_on, p.last_update,
+			u.firstname AS author_firstname, u.lastname AS author_lastname, u.website AS author_website
+		FROM posts p
+		JOIN users u ON u.id = p.author_id
+		WHERE p.published = 1 AND strftime('%Y-%m', p.created_on) = ?
+		ORDER BY p.created_on DESC
+		LIMIT ? OFFSET ?
+	`).all(yearMonth, req.itens, req.offset);
 
-		});
+	const total = db.prepare(`
+		SELECT COUNT(*) AS n FROM posts WHERE published = 1 AND strftime('%Y-%m', created_on) = ?
+	`).get(yearMonth).n;
+
+	req.pageData.posts = rows.map(shapePost);
+	req.pageData.totalNumberOfPages = Math.ceil(total / req.itens);
+
+	res.send(render.blog_index(req.pageData));
 }
 ];

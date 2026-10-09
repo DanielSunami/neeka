@@ -6,7 +6,7 @@
 <body>
 <div class="page-wrap">
 	{{#def.admin_header}}
-	{{var fecha = require('fecha');}}
+	{{let fecha = require('fecha');}}
 	<div class="container">
 		<div class="max-width-4 mx-auto">
 
@@ -111,13 +111,13 @@
 
 		
 		document.forms.user.querySelector('#btn-save').onclick = function(){
-			var _self = this;
+			let _self = this;
 	
 			_self.classList.add("running");
 			_self.setAttribute("disabled","");
-			var req = new XMLHttpRequest();
+			let req = new XMLHttpRequest();
 			req.onload = function(){
-				var res = JSON.parse(this.responseText);
+				let res = JSON.parse(this.responseText);
 				_self.classList.remove("running");
 				_self.removeAttribute("disabled");
 				if(res.ok) {
@@ -136,13 +136,13 @@
 		
 
 		document.forms.user.querySelector('#btn-delete').onclick = function(){
-			var _self = this;
+			let _self = this;
 	
 			_self.classList.add("running");
 			_self.setAttribute("disabled","");
-			var req = new XMLHttpRequest();
+			let req = new XMLHttpRequest();
 			req.onload = function(){
-				var res = JSON.parse(this.responseText);
+				let res = JSON.parse(this.responseText);
 				_self.classList.remove("running");
 				_self.removeAttribute("disabled");
 				if(res.ok) {

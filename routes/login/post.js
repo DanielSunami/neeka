@@ -1,28 +1,24 @@
-var render = require(rootDir+'/render'),
-	mongoose = require('mongoose'),
-	fs = require('fs'),
-	sessionManager = require(rootDir+'/lib/sessionManager.js');
-
+let sessionManager = require(rootDir+'/lib/sessionManager.js');
+const sqlite = require(rootDir+'/lib/sqlite');
+const { shapeUser } = require(rootDir+'/lib/pageData');
 
 module.exports = function(req, res){
+	const db = sqlite.open();
+	const row = db.prepare(`SELECT * FROM users WHERE email = ?`).get(
+		(req.body.email || '').toLowerCase().trim()
+	);
 
-	model.user.auth(req.body.email , req.body.password, function(err, user){
-		if(err) {
-			console.log(err);
-		} else {
-			if(user){
-				res.setHeader("Set-Cookie",sessionManager.createSession({
-					user: {
-						id: user._id,
-						name: user.fullName,
-						permissions: user.permissions
-					}
-				}));
-				res.json({ok:true});
-			} else {
-				res.json({ok:false});
+	if(row && utils.checkPassword(req.body.password, row.password)){
+		const user = shapeUser(row);
+		res.setHeader("Set-Cookie", sessionManager.createSession({
+			user: {
+				id: user._id,
+				name: user.fullName,
+				permissions: user.permissions
 			}
-		}
-	})
-
+		}));
+		res.json({ok:true});
+	} else {
+		res.json({ok:false});
+	}
 };

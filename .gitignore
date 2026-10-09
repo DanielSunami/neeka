@@ -3,7 +3,7 @@
 /render
 !/render/index.js 
 neekaconf.json
-dbconf.json
+data/
 populate.js
 teste-query-year.js
 aggregate.js

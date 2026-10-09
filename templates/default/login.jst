@@ -68,15 +68,15 @@
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function () {
 
-	for(var a = 0; a < document.forms.length; a++){
+	for(let a = 0; a < document.forms.length; a++){
 		document.forms[a].querySelector('button').onclick = function(){
-			var _self = this;
+			let _self = this;
 	
 			_self.classList.add("running");
 			_self.setAttribute("disabled","");
-			var req = new XMLHttpRequest();
+			let req = new XMLHttpRequest();
 			req.onload = function(){
-				var res = JSON.parse(this.responseText);
+				let res = JSON.parse(this.responseText);
 				_self.classList.remove("running");
 				_self.removeAttribute("disabled");
 				if(res.ok) document.location.pathname = "/admin";
