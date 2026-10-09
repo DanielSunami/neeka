@@ -21,30 +21,34 @@
 					<label for="tab2" class="tab-label">Metadata</label>
 
 					<div class="tab">
-						<div class="form-group">
-							<label>Title
-							<input type="text" name="title" value="{{=it.post.title}}" /></label>
-						</div>
-						<div class="form-group">
-							<label>Slug
-							<input type="text" name="slug" value="{{=it.post.slug}}"/></label>
-						</div>
-						<div class="form-group clearfix">
-							<label class="col col-6">Published
-							<input type="radio" name="published" value="true" {{? it.post.published }}checked {{?}}/></label>
-							<label class="col col-6">Draft
-							<input type="radio" name="published" value="false" {{? !it.post.published }}checked {{?}}/></label>
+						<div class="px1 mb-3">
+							<div class="form-group">
+								<label>Title
+								<input type="text" name="title" value="{{=it.post.title}}" /></label>
+							</div>
+							<div class="form-group">
+								<label>Slug
+								<input type="text" name="slug" value="{{=it.post.slug}}"/></label>
+							</div>
+							<div class="form-group clearfix">
+								<label class="sm-col sm-col-6">Published
+								<input type="radio" name="published" value="true" {{? it.post.published }}checked {{?}}/></label>
+								<label class="sm-col sm-col-6">Draft
+								<input type="radio" name="published" value="false" {{? !it.post.published }}checked {{?}}/></label>
+							</div>
 						</div>
 					</div>
 					<div class="tab">
-						<div class="form-group">
-							<label>Keywords
-							<input type="text" name="keywords" value="{{=it.post.keywords}}"/></label>
-						</div>
-						<div class="form-group" style="margin-bottom: 1rem;">
-							<label>Description
-							<input type="text" name="description" value="{{=it.post.description}}"/></label>
-							<small>Important. Usually used in shared link thumbnails like facebook.</small>
+						<div class="px1">
+							<div class="form-group">
+								<label>Description
+								<input type="text" name="description" value="{{=it.post.description}}"/></label>
+							</div>
+							<div class="form-group" style="margin-bottom: 1rem;">
+								<label>OG Image
+								<input type="text" name="og_image" value="{{=it.post.og_image}}"/></label>
+								<small>Absolute URL. Used as og:image when the post is shared.</small>
+							</div>
 						</div>
 					</div>
 					
@@ -92,16 +96,16 @@
 					<div class="flex clearfix mt3 justify-end">
 						<a href="/admin" class="btn regular col-right col-3">Cancel</a>
 						{{? it.post._id != '' }}
-						<button type="button" id="btn-delete" class="neeka-button salmon col-right col-3 ml2 ld ld-ext-right">
+						<button type="button" id="btn-delete" class="neeka-button danger col-right col-3 ml2 ld ld-ext-right">
 							Delete
 							<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
 						</button>
 						{{?}}
-						<button type="button" id="btn-save" class="neeka-button green col-right col-3 ml2 ld ld-ext-right">
+						<button type="button" id="btn-save" class="neeka-button success col-right col-3 ml2 ld ld-ext-right">
 							Save
 							<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
 						</button>
-						<button type="button" id="btn-save-quit" class="neeka-button green col-right col-3 ml2 ld ld-ext-right">
+						<button type="button" id="btn-save-quit" class="neeka-button success col-right col-3 ml2 ld ld-ext-right">
 							Save & Quit
 							<div class="ld ld-ring ld-cycle" style="font-size: 1.6em;"></div>
 						</button>

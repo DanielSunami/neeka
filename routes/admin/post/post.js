@@ -30,7 +30,7 @@ function(req, res) {
 	try {
 		const info = db.transaction(function() {
 			const result = db.prepare(`
-				INSERT INTO posts (title, slug, preview, body, author_id, published, keywords, description, created_on, last_update)
+				INSERT INTO posts (title, slug, preview, body, author_id, published, description, og_image, created_on, last_update)
 				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 			`).run(
 				req.body.title,
@@ -39,8 +39,8 @@ function(req, res) {
 				req.body.body,
 				req.session.user.id,
 				published,
-				req.body.keywords || '',
 				req.body.description || '',
+				req.body.og_image || '',
 				now,
 				now
 			);

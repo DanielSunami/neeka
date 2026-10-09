@@ -1,6 +1,6 @@
 {{let fecha =  require('fecha');}}
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 	<meta charset="utf-8">
 	<title>{{=it.title}} | {{=it.site.name}}</title>
@@ -10,31 +10,23 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="{{=it.post.description}}">
-	<meta name="keywords" content="{{=it.post.keywords}}">
 	<meta name="robots" content="index,follow">
+	<link rel="canonical" href="{{=it.canonical}}">
 
-	<!-- Open Graph Protocol -->
-	<meta property="og:locale" content>
-	<meta property="og:type" content>
-
-	<meta property="og:title" content="Criando Um JAR Executável">
-	<meta property="og:title" content="{{=it.title}}">
-	<meta property="og:description" content="{{=it.site.description}}">
+	<meta property="og:locale" content="pt_BR">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="{{=it.post.title}}">
+	<meta property="og:description" content="{{=it.post.description}}">
 	<meta property="og:site_name" content="{{=it.site.name}}">
-	<meta property="og:url" content="{{=it.site.url}}{{=it.url}}">
+	<meta property="og:url" content="{{=it.canonical}}">
+	{{? it.post.og_image }}
+	<meta property="og:image" content="{{=it.post.og_image}}">
+	{{?}}
+	<meta property="article:published_time" content="{{=it.post.created_on.toISOString()}}">
+	<meta property="article:modified_time" content="{{=it.post.last_update.toISOString()}}">
+	<meta property="article:author" content="{{=it.post.author.website || it.post.author.fullName}}">
 
-	<meta property="og:image" content>
-	<meta property="og:image:secure_url" content>
-
-	<!-- Google+ Snippets -->
-	<meta itemprop="url" content="{{=it.url}}">
-	<meta itemprop="name" content="{{=it.site.name}}">
-
-	<!-- Twitter -->
-	<meta name="twitter:description" content="{{=it.post.description}}">
-	<meta name="twitter:title" content="{{=it.title}}">
-	<meta name="twitter:site" content><!-- @user -->
-	<meta name="twitter:image" content>
+	<script type="application/ld+json">{{=it.jsonLd}}</script>
 
 	<link rel="apple-touch-icon" href>
 
@@ -80,8 +72,8 @@
 		<div class="max-width-3 mx-auto">
 			<div class="post-container">
 
-				<h1 class="post-title"><a href="{{=it.url}}">{{=it.post.title}}</a></h3>
-				<div class="post-date"><small>{{=fecha.format(it.post.created_on, 'brazilian')}} | <a href="{{=it.post.author.website}}">{{=it.post.author.fullName}}</a></small></div>
+				<h1 class="post-title"><a href="{{=it.url}}">{{=it.post.title}}</a></h1>
+				<div class="post-date"><small><time datetime="{{=it.post.created_on.toISOString()}}">{{=fecha.format(it.post.created_on, 'brazilian')}}</time> | <a href="{{=it.post.author.website}}">{{=it.post.author.fullName}}</a></small></div>
 				<div class="post-social">
 					{{ let encodedURL = encodeURIComponent('https://' + it.site.url + it.url); }}
 					<div class="social-icon">

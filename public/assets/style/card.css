@@ -14,7 +14,7 @@
 .card-head {
 	text-align: center;
 	margin: 0;
-	padding: 20px 0 20px 30px;
+	padding: 20px 24px;
 	border-radius: 10px 10px 0 0;
 }
 
@@ -26,9 +26,14 @@
 }
 
 .card-body {
-	padding: 20px;
+	padding: 24px 12px;
 	color: #333333;
 	border-radius: 0 0 10px 10px;
+}
+
+.card-body .px1 {
+	padding-left: 12px;
+	padding-right: 12px;
 }
 
 .card-action {

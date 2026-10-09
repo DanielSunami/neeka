@@ -17,13 +17,13 @@ function(req, res) {
 		name: req.body.site_name,
 		url: req.body.site_url,
 		description: req.body.site_description,
-		keywords: req.body.site_keywords,
 		gaUID: req.body.gaUID
 	};
 
 	if(req.body.smtp_pass) update.smtp_pass = req.body.smtp_pass;
 
 	Object.assign(NEEKA, update);
+	delete NEEKA.keywords;
 
 	fs.writeFileSync(rootDir+'/neekaconf.json', JSON.stringify(NEEKA));
 

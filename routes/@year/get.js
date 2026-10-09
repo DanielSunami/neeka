@@ -30,7 +30,7 @@ function(req, res, next) {
 
 	const rows = db.prepare(`
 		SELECT p.id, p.title, p.slug, p.preview, p.body, p.author_id, p.published,
-			p.keywords, p.description, p.created_on, p.last_update,
+			p.description, p.created_on, p.last_update,
 			u.firstname AS author_firstname, u.lastname AS author_lastname, u.website AS author_website
 		FROM posts p
 		JOIN users u ON u.id = p.author_id

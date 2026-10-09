@@ -35,16 +35,16 @@ function(req, res){
 			const result = db.prepare(`
 				UPDATE posts SET
 					title = ?, slug = ?, preview = ?, body = ?,
-					keywords = ?, published = ?, description = ?, last_update = ?
+					published = ?, description = ?, og_image = ?, last_update = ?
 				WHERE id = ?
 			`).run(
 				req.body.title,
 				req.body.slug,
 				req.body.preview,
 				req.body.body,
-				req.body.keywords || '',
 				published,
 				req.body.description || '',
+				req.body.og_image || '',
 				sqlite.now(),
 				req.params.id
 			);

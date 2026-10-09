@@ -9,7 +9,13 @@ module.exports = function(req, res, next){
 
 		let obj = Object.assign(JSON.parse(fs.readFileSync(rootDir+'/neekaconf.json', 'utf8')), req.body);
 
-		fs.writeFileSync(rootDir+'/neekaconf.json', JSON.stringify(obj)); 
+		fs.writeFileSync(rootDir+'/neekaconf.json', JSON.stringify(obj));
+
+		const host = String(req.body.url || '').replace(/\/$/, '');
+		const origin = /^https?:\/\//i.test(host) ? host : ('https://' + host);
+		fs.writeFileSync(rootDir+'/public/robots.txt',
+			'User-agent: *\nDisallow: \nDisallow: /admin\n\nSitemap: ' + origin + '/sitemap.xml\n'
+		); 
 
 		let deleteFolderRecursive = function (path) {
 			if( fs.existsSync(path) ) {

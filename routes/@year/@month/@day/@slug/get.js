@@ -15,7 +15,7 @@ module.exports = function(req, res, next){
 
 	const row = db.prepare(`
 		SELECT p.id, p.title, p.slug, p.preview, p.body, p.author_id, p.published,
-			p.keywords, p.description, p.created_on, p.last_update,
+			p.description, p.og_image, p.created_on, p.last_update,
 			u.firstname AS author_firstname, u.lastname AS author_lastname, u.website AS author_website
 		FROM posts p
 		JOIN users u ON u.id = p.author_id
@@ -28,10 +28,34 @@ module.exports = function(req, res, next){
 		res.status(404).end("not found!");
 	} else {
 		const post = shapePost(row);
+		const host = (req.pageData.site.url || '').replace(/\/$/, '');
+		const origin = /^https?:\/\//i.test(host) ? host : ('https://' + host);
+		const canonical = origin + req.pageData.url;
+		const jsonLd = {
+			'@context': 'https://schema.org',
+			'@type': 'BlogPosting',
+			headline: post.title,
+			description: post.description || '',
+			datePublished: post.created_on ? post.created_on.toISOString() : undefined,
+			dateModified: post.last_update ? post.last_update.toISOString() : undefined,
+			author: {
+				'@type': 'Person',
+				name: post.author.fullName
+			},
+			mainEntityOfPage: canonical,
+			publisher: {
+				'@type': 'Organization',
+				name: req.pageData.site.name
+			}
+		};
+		if (post.author.website) jsonLd.author.url = post.author.website;
+		if (post.og_image) jsonLd.image = post.og_image;
+
 		req.pageData.post = post;
 		req.pageData.title = post.title;
+		req.pageData.canonical = canonical;
+		req.pageData.jsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 		if(post.description) req.pageData.site.description = post.description;
-		if(post.keywords) req.pageData.site.keywords = post.keywords;
 		res.send(render.blog_post(req.pageData));
 	}
 };
