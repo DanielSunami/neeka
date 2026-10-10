@@ -61,7 +61,16 @@
 }
 
 .post p {
-	margin-bottom: 1.5em;
+	margin-bottom: 1.25em;
+	line-height: 1.45rem;
+}
+
+.post a {
+	border-bottom: 1px dashed #444;
+}
+
+.post a:hover {
+	border-bottom: 1px dashed #3AB8E6;
 }
 
 .post-separator {

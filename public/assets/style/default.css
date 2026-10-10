@@ -27,7 +27,7 @@ body {
 
 a {
 	text-decoration: none;
-	transition: color .5s;
+	transition: color .5s, margin-bottom .5s;
 }
 
 a:hover {
