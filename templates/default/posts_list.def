@@ -20,7 +20,7 @@
 				<a href="whatsapp://send?text={{=encodedURL}}" target="_blank"><img src="/assets/img/whatsapp-icon.svg"/></a>
 			</div>
 			<div class="social-icon">
-				<a href="https://twitter.com/intent/tweet?url={{=encodedURL}}" target="_blank"><img src="/assets/img/twitter-icon.svg"/></a>
+				<a href="https://x.com/intent/post?url={{=encodedURL}}" target="_blank"><img src="/assets/img/x-icon.svg"/></a>
 			</div>
 			<div class="social-icon">
 				<a href="https://t.me/share/url?url={{=encodedURL}}" target="_blank"><img src="/assets/img/telegram-icon.svg" style="margin-left: 3px"/></a>
