@@ -3,6 +3,7 @@ let render = require(rootDir+'/render'),
 const pagination = require(rootDir+'/lib/pagination');
 const sqlite = require(rootDir+'/lib/sqlite');
 const { shapePost } = require(rootDir+'/lib/pageData');
+const { attachTags } = require(rootDir+'/lib/tags');
 
 module.exports = function(req, res, next){
 	if(isNaN(req.params.year)) return next();
@@ -34,6 +35,7 @@ module.exports = function(req, res, next){
 		`).get(ymd).n;
 
 		req.pageData.posts = rows.map(shapePost);
+		attachTags(db, req.pageData.posts);
 		req.pageData.totalNumberOfPages = Math.ceil(total / req.itens);
 
 		res.send(render.blog_index(req.pageData));

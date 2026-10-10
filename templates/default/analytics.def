@@ -1,0 +1,5 @@
+{{? it.site.gaUID }}
+	<link rel="stylesheet" href="/assets/style/cookie-banner.css" type="text/css" />
+	<script>window.NEEKA_GA = {{=JSON.stringify({ id: it.site.gaUID, path: it.url, title: it.title })}};</script>
+	<script src="/assets/lib/cookie-banner.js" defer></script>
+{{?}}

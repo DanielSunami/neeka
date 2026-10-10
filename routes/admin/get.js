@@ -1,6 +1,7 @@
 let render = require(rootDir+'/render');
 const sqlite = require(rootDir+'/lib/sqlite');
 const { shapePost } = require(rootDir+'/lib/pageData');
+const { attachTags } = require(rootDir+'/lib/tags');
 
 module.exports = function(req, res){
 	const db = sqlite.open();
@@ -19,5 +20,13 @@ module.exports = function(req, res){
 	`).all();
 
 	req.pageData.posts = rows.map(shapePost);
+	attachTags(db, req.pageData.posts);
+	req.pageData.tags = db.prepare(`
+		SELECT t.name, COUNT(pt.post_id) AS n
+		FROM tags t
+		LEFT JOIN post_tags pt ON pt.tag_id = t.id
+		GROUP BY t.id
+		ORDER BY t.name COLLATE NOCASE
+	`).all();
 	res.send(render.admin_index(req.pageData));
 };

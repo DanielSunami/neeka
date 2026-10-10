@@ -23,7 +23,8 @@ function(req, res) {
 		body: "",
 		published: true,
 		description: "",
-		og_image: ""
+		og_image: "",
+		tags: []
 	};
 	req.pageData.user = user || { preferences: { editor: 'trix' } };
 

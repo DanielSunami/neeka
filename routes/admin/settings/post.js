@@ -1,6 +1,7 @@
 const
 	utils = require(rootDir+'/lib/utils'),
-	fs = require('fs');
+	fs = require('fs'),
+	sqlite = require(rootDir+'/lib/sqlite');
 
 module.exports = [
 
@@ -26,6 +27,9 @@ function(req, res) {
 	delete NEEKA.keywords;
 
 	fs.writeFileSync(rootDir+'/neekaconf.json', JSON.stringify(NEEKA));
+
+	sqlite.setPage('privacy', req.body.privacy_html || '');
+	sqlite.setPage('terms', req.body.terms_html || '');
 
 	res.json({ ok: true });
 }

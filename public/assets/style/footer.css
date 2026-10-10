@@ -5,8 +5,10 @@ html, body {
 footer {
 	background-color: #2D3138;
 	display: flex!important;
+	flex-direction: column;
     justify-content: center;
     align-items: center;
+	gap: 10px;
 }
 
 footer div, footer div a {
@@ -16,7 +18,13 @@ footer div, footer div a {
 .poweredby {
 	text-align: center;
 	font-weight: 300;
-	height: 20px;
+	font-size: .95rem;
+}
+
+footer .footer-sep {
+	margin: 0 0.4em;
+	opacity: 0.7;
+	color: white;
 }
 
 .page-wrap {
@@ -30,5 +38,5 @@ footer div, footer div a {
 }
 
 footer, .page-wrap:after {
-	height: 51px; 
+	height: 80px;
 }

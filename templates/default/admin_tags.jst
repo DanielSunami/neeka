@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{{#def.admin_head}}
+</head>
+<body>
+<div class="page-wrap">
+	{{#def.admin_header}}
+	<div class="container">
+		<div class="max-width-4 mx-auto">
+			<div class="clearfix mxn1">
+				<div class="sm-col sm-col-12 px1 my2">
+					<div class="table">
+						<div class="clearfix table-row header">
+							<div class="sm-col sm-col-8 cell">Tag</div>
+							<div class="sm-col sm-col-4 cell">Posts</div>
+						</div>
+						{{~it.tags :tag}}
+						<div class="clearfix table-row">
+							<div class="sm-col sm-col-8 cell"><a href="/tags/{{=encodeURIComponent(tag.name)}}">{{=tag.name}}</a></div>
+							<div class="sm-col sm-col-4 cell">{{=tag.n}}</div>
+						</div>
+						{{~}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	{{#def.footer}}
+</body>
+</html>

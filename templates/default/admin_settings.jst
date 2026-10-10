@@ -63,8 +63,32 @@
 									</div>
 									<div class="sm-col sm-col-6 px1">
 										<div class="form-group">
-											<label>Google Analytics UID
+											<label>Google Analytics 4 ID
 											<input type="text" name="gaUID" value="{{=it.NEEKA.gaUID}}"/></label>
+											<small>G-XXXXXXXX. Leave empty to disable.</small>
+										</div>
+									</div>
+								</div>
+								<div class="clearfix mt3">
+									<div class="sm-col sm-col-12 px1">
+										<span class="h3">Legal</span>
+									</div>
+								</div>
+								<div class="clearfix mt3">
+									<div class="sm-col sm-col-12 px1">
+										<div class="form-group">
+											<label>Política de Privacidade
+											<textarea name="privacy_html" rows="12">{{!it.privacy_html}}</textarea></label>
+											<small>HTML da página /politica-de-privacidade.</small>
+										</div>
+									</div>
+								</div>
+								<div class="clearfix mt3">
+									<div class="sm-col sm-col-12 px1">
+										<div class="form-group">
+											<label>Termos de Uso
+											<textarea name="terms_html" rows="12">{{!it.terms_html}}</textarea></label>
+											<small>HTML da página /termos-de-uso.</small>
 										</div>
 									</div>
 								</div>

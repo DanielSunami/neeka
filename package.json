@@ -38,6 +38,7 @@
     "url": "https://github.com/DanielSunami/neeka"
   },
   "scripts": {
+    "start": "node .",
     "test": "node test/main.js"
   },
   "devDependencies": {

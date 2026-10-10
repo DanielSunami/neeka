@@ -4,6 +4,13 @@
 		{{ let url = '/' + fecha.format(post.created_on, 'url') + '/' + post.slug; }}
 		<h2 class="post-title"><a href="{{=url}}">{{=post.title}}</a></h2>
 		<div class="post-date"><small>{{=fecha.format(post.created_on, 'brazilian')}} | <a href="{{=post.author.website}}">{{=post.author.fullName}}</a></small></div>
+		{{? post.tags && post.tags.length }}
+		<div class="post-tags">
+			{{~post.tags :tag}}
+			<a href="/tags/{{=encodeURIComponent(tag)}}">{{=tag}}</a>
+			{{~}}
+		</div>
+		{{?}}
 		<div class="post-social">
 			{{ let encodedURL = encodeURIComponent('https://' + it.site.url + url); }}
 			<div class="social-icon">

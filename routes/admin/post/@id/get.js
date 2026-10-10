@@ -1,6 +1,7 @@
 const utils = require(rootDir+'/lib/utils');
 const sqlite = require(rootDir+'/lib/sqlite');
 const { shapePost, shapeUser } = require(rootDir+'/lib/pageData');
+const { attachTags } = require(rootDir+'/lib/tags');
 
 module.exports = [
 
@@ -32,6 +33,7 @@ function(req, res) {
 		res.redirect('/admin/posts');
 	} else {
 		req.pageData.post = shapePost(row);
+		attachTags(db, req.pageData.post);
 		res.send(req.render(req.pageData));
 	}
 }

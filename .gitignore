@@ -7,3 +7,9 @@ data/
 populate.js
 teste-query-year.js
 aggregate.js
+.env
+deploy.sh
+PRIVACIDADE.md
+PRIVACIDADE.html
+TERMOS.md
+TERMOS.html

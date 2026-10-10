@@ -1,3 +1,10 @@
 <footer class="fit">
-	<div class="poweredby">Powered by <a href="//danielsunami.github.io/neeka">Neeka</a></div>
+	<div class="legal-links">
+		<a href="/politica-de-privacidade">Política de Privacidade</a>
+		<span class="footer-sep">·</span>
+		<a href="/termos-de-uso">Termos de Uso</a>
+	</div>
+	<div class="poweredby">
+		Powered by <a href="//danielsunami.github.io/neeka">Neeka</a>
+	</div>
 </footer>

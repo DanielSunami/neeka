@@ -1,6 +1,7 @@
 let render = require(rootDir+'/render');
 const sqlite = require(rootDir+'/lib/sqlite');
 const { shapePost } = require(rootDir+'/lib/pageData');
+const { attachTags } = require(rootDir+'/lib/tags');
 
 module.exports = function(req, res, next){
 	if(isNaN(req.params.year)) return next();
@@ -28,6 +29,7 @@ module.exports = function(req, res, next){
 		res.status(404).end("not found!");
 	} else {
 		const post = shapePost(row);
+		attachTags(db, post);
 		const host = (req.pageData.site.url || '').replace(/\/$/, '');
 		const origin = /^https?:\/\//i.test(host) ? host : ('https://' + host);
 		const canonical = origin + req.pageData.url;

@@ -68,15 +68,20 @@
 				</div>
 				<div class="sm-col sm-col-12 md-col-6 px1">
 					<div class="table">
-						<!-- table header -->
 						<div class="clearfix table-row header">
-							<div class="sm-col sm-col-12 cell center" style="padding-left: 0;">Tag</div>
+							<div class="sm-col sm-col-12 cell center" style="padding-left: 0;">Tags</div>
 						</div>
-						<!-- rows -->
 						<div class="clearfix table-row">
-							<div class="sm-col sm-col-12 cell"></div>
+							<div class="sm-col sm-col-12 cell">
+								{{? it.tags && it.tags.length }}
+								<div class="tags-list" style="margin: 0;">
+									{{~it.tags :tag}}
+									<a href="/tags/{{=encodeURIComponent(tag.name)}}">{{=tag.name}} ({{=tag.n}})</a>
+									{{~}}
+								</div>
+								{{?}}
+							</div>
 						</div>
-					
 					</div>
 				</div>
 			</div>

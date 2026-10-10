@@ -2,6 +2,7 @@ const utils = require(rootDir+'/lib/utils');
 const pagination = require(rootDir+'/lib/pagination');
 const sqlite = require(rootDir+'/lib/sqlite');
 const { shapePost } = require(rootDir+'/lib/pageData');
+const { attachTags } = require(rootDir+'/lib/tags');
 
 module.exports = [
 
@@ -35,6 +36,7 @@ function(req, res) {
 	const total = db.prepare(`SELECT COUNT(*) AS n FROM posts WHERE published = 1`).get().n;
 
 	req.pageData.posts = rows.map(shapePost);
+	attachTags(db, req.pageData.posts);
 	req.pageData.totalNumberOfPages = Math.ceil(total / req.itens);
 
 	res.send(req.render(req.pageData));

@@ -4,6 +4,51 @@
 	font-size: 2em;
 }
 
+.legal-body {
+	text-align: left;
+	margin: 2em 0 4em;
+	font-size: 1.05em;
+	line-height: 1.55;
+}
+
+.legal-body h2 {
+	margin: 1.8em 0 0.6em;
+	font-size: 1.25em;
+}
+
+.legal-body h3 {
+	margin: 1.4em 0 0.5em;
+	font-size: 1.1em;
+}
+
+.legal-body p,
+.legal-body li {
+	margin-bottom: 0.9em;
+}
+
+.legal-body table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 1em 0 1.5em;
+}
+
+.legal-body th,
+.legal-body td {
+	border: 1px solid #ddd;
+	padding: 8px 10px;
+	vertical-align: top;
+	text-align: left;
+}
+
+.legal-body th {
+	width: 32%;
+	font-weight: 600;
+}
+
+.legal-body code {
+	font-size: 0.9em;
+}
+
 .post-date {
 	text-align: center;
 	font-weight: 300;
@@ -63,5 +108,37 @@
 a.monstra-blog-tag {
 	float: left;
 	padding: 5px;
+	text-decoration: none;
+}
+
+.post-tags {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+	margin: 0 0 1.5em 0;
+}
+
+.post-tags a {
+	padding: 4px 10px;
+	border-radius: 4px;
+	background: #232736;
+	color: #f0eff2;
+	text-decoration: none;
+	font-size: 0.85em;
+}
+
+.tags-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 2em 0;
+}
+
+.tags-list a {
+	padding: 6px 12px;
+	border-radius: 4px;
+	background: #232736;
+	color: #f0eff2;
 	text-decoration: none;
 }
