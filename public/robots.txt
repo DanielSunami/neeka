@@ -1,5 +1,3 @@
 User-agent: *
 Disallow: 
 Disallow: /admin
-
-Sitemap: https://akafrx.com/sitemap.xml
